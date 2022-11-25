@@ -74,7 +74,7 @@ int Sum_EvenNum(int n){
 }
 void Print_Divisor(int n){
     cout << "Tất cả ước số của n: ";
-    for (size_t i = 0; i < n; i++)
+    for (size_t i = 1; i <= n; i++)
     {
         if (n % i == 0)
         {
@@ -105,48 +105,108 @@ int Sum_EvenDivsiorNum(int n){
             {
                 sum += sum;
             }
-            
         }
-        
     }
 }
 void Print_PerfectSqrt_Divisior(int n){
+    int j = 0;
     for (size_t i = 0; i < n; i++)
     {
-        int j = 0;
         if (n % i == 0)
         {
             while (j <= i)
             {
                 if (j*j == i)
                 {
-                    
+                    cout << i << " ";
                 }
-                
+                j++;
             }
-            
         }
-        
     }
-    
+    cout << "\n";
 }
 int Sum_Perfect_Sqrt_Divisior_Smaller_Than_n(int n){
-
+    int sum = 0;
+    int j = 0;
+    for (size_t i = 0; i < n; i++)
+    {
+        if (n % i == 0)
+        {
+            while (j <= i)
+            {
+                if (j*j == i)
+                {
+                    sum += j;
+                }
+                j++;
+            }
+        }
+    }
+    cout << "\n";
 }
 void Check_Prime_Num(int n){
-
+    int flag = 0;
+    if (n < 2)
+    {
+        cout << "Không là số nguyên tố" << endl;
+    }
+    for (size_t i = 2; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            flag++;
+            break;
+        }
+    }
+    if (flag != 0)
+    {
+        cout << "n là số nguyên tố" << endl;
+    }
 }
 void Print_Prime_Num_Smaller_Than_n(int n){
-
+    int arr[n+1];
+    for (size_t i = 0; i <= n; i++)
+    {
+        arr[i] = 1;
+    }
+    arr[0]=arr[1]=0;
+    for (size_t i = 2; i <= n; i++)
+    {
+        for (size_t j = i*i; j <= n; j++)
+        {
+            arr[j] = 0;
+        }
+    }
+    for (size_t i = 0; i <= n; i++)
+    {
+        if (arr[i] == 1)
+        {
+            cout << arr[i] << " ";
+        }
+    }
 }
 void Test_NotKnown(){
 
 }
-int Sum_Element_Of_n(){
-
+int Sum_Element_Of_n(int n){
+    int sum = 0;
+    while (n)
+    {
+        sum += n%10;
+        n/10;
+    }
+    
 }
 void print_Max_Element_Of_n(int n){
-
+    int arr[n];
+    while (/* condition */)
+    {
+        arr[i] = n%10;
+        n /= 10;  
+    }
+    
+    
 }
 void print_PrimeNum_Divisior_of_n(int n){
 
