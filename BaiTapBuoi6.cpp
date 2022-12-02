@@ -328,6 +328,5 @@ int main() {
     In_Ra_Cac_So_Nguyen_To_Moi_Hang(a, n, m);
     In_Ra_Cac_So_Chinh_Phuong_Moi_Cot(a, n, m);
     In_Ra_So_Lon_Nhat_Cua_Mang(a, n, m);
-
     system("Pause");
 }
