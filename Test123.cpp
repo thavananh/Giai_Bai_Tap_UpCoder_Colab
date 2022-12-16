@@ -2,7 +2,7 @@
 using namespace std;
 
 int main(){
-    int a[4][1000];
+    int a[1][1000];
     int count[4][1000];
     int n;
     cin >> n;
@@ -29,15 +29,15 @@ int main(){
         {
             count[0][i-1] = count[0][i-1] + count[0][i];
         }
-        if (a[1][i] >= a[1][i-1])
+        if (a[0][i] >= a[0][i-1])
         {
             count[1][i-1] = count[1][i-1] + count[1][i];
         }
-        if (a[2][i] < a[2][i-1])
+        if (a[0][i] < a[0][i-1])
         {
             count[2][i-1] = count[2][i-1] + count[2][i];
         }
-        if (a[3][i] <= a[3][i-1])
+        if (a[0][i] <= a[0][i-1])
         {
             count[3][i-1] = count[3][i-1] + count[3][i];
         }
@@ -47,18 +47,14 @@ int main(){
     for (size_t i = 0; i < n; i++)
     {
         int max= count[i][0];
-        if (i % 2 == 0)
-        {
-            
-        }
+        
         
         for (size_t j = 1; j < n; j++)
         {
-            if (max < count[i][j])
+            if (max <= count[i][j])
             {
                 temp[i] = 1;
-                i++;
-                continue;
+                break;
             }
         }
         if (temp[i] == 0)
