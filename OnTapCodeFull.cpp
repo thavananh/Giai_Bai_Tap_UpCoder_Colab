@@ -86,7 +86,8 @@ void kiemTraCapSoNhan_Trong4So() {
         }
     }
 }
-
+// Kết thúc bài tập buổi 2
+// Bắt đầu bài tập buổi 3
 void tongCacSoChan_1denN() {
     int n;
     int sum = 0;
@@ -229,7 +230,6 @@ bool SoNguyenTo(int n) {
     return true;
 }
 
-
 void inRaCacSoNguyenToNhoN() {
     int n;
     cin >> n;
@@ -367,10 +367,114 @@ void soDoiXung() {
     while (temp)
     {
         sodoixung = sodoixung + temp%10;
-        
+        sodoixung = sodoixung * 10;
+        temp = temp / 10;
     }
-    
+    if (sodoixung/10 == n)
+    {
+        cout << "La so doi xung" << endl;
+    }
+    else
+    {
+        cout << "Khong la so doi xung" << endl;
+    }
 }
+
+void lietKeSoDoiXungNhoHonN() {
+    int n;
+    cin >> n;
+    for (size_t i = 11; i < n; i++)
+    {
+        cout << i << " ";
+    }
+}
+
+void UCLN() {
+    int n, m;
+    cin >> n; 
+    cin >> m;
+    while (n != 0 && m!= 0)
+    {
+        if (n > m)
+        {
+            n = n % m;
+        }
+        else
+        {
+            m = m % n;
+        }
+    }
+    if (n != 0)
+    {
+        cout << "UCLN = " << n;
+    }
+    else
+    {
+        cout << "UCLN = " << m;
+    }
+}
+
+int Check_UCLN(int a, int b) {
+    while (a != 0 && b!= 0)
+    {
+        if (a > b)
+        {
+            a = a % b;
+        }
+        else
+        {
+            b = b % a;
+        }
+    }
+    if (a != 0)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
+}
+
+void BCNN() {
+    int n, int m;
+    cin >> n;
+    cin >> m;
+    cout << (n*m)/Check_UCLN(n, m);
+}
+
+void phanTichThuaSoNguyenTo() { 
+    int n;
+    cin >> n;
+    int i = 2;
+    if (n == 1)
+    {
+        cout << "Khong phan tich duoc" << endl;
+    }
+    while (n > 1)
+    {
+        if (n % i == 0 && SoNguyenTo(n))
+        {
+            while (n % i == 0)
+            {
+                cout << i << " ";
+                n = n / i;
+            }   
+        }
+        i++;
+    }   
+}
+
+void doiSoThapPhanSangNhiPhan(int n) {
+    int n;
+    cin >> n;
+    while (n)
+    {
+        cout << n % 2;
+        n = n / 2;
+    }
+}
+//Kết thúc bài tập buổi 3
 
 int main() {
 
