@@ -87,7 +87,7 @@ void kiemTraCapSoNhan_Trong4So() {
     }
 }
 // Kết thúc bài tập buổi 2
-// Bắt đầu bài tập buổi 3
+// Bắt đầu bài tập buổi 5
 void tongCacSoChan_1denN() {
     int n;
     int sum = 0;
@@ -474,7 +474,7 @@ void doiSoThapPhanSangNhiPhan(int n) {
         n = n / 2;
     }
 }
-//Kết thúc bài tập buổi 3
+//Kết thúc bài tập buổi 5
 
 int main() {
 
