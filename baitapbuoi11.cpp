@@ -51,7 +51,7 @@ int main(){
         
         for (size_t j = 1; j < n; j++)
         {
-            if (max <= count[i][j])
+            if (max <= count[i][j] || (count[i][j] == 1 && j != n-1))
             {
                 temp[i] = 1;
                 break;
