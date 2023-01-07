@@ -229,6 +229,7 @@ bool SoNguyenTo(int n) {
     return true;
 }
 
+
 void inRaCacSoNguyenToNhoN() {
     int n;
     cin >> n;
@@ -239,6 +240,136 @@ void inRaCacSoNguyenToNhoN() {
             cout << i << " ";
         }
     }
+}
+
+int demUocSo(int n) {
+    int n;
+    cin >> n;
+    int count = 0;
+    int m = sqrt(n);
+    if (m * m == n)
+    {
+        for (size_t i = 1; i <= m; i++)
+        {
+            if (n % i == 0 && i != m)
+            {
+                count = count + 2;
+            }
+        }
+        count = count + 1;
+    }
+    else
+    {
+        for (size_t i = 2; i <= m; i++)
+        {
+            if (n % i == 0)
+            {
+                count = count + 2;
+            }   
+        }
+    }
+    return count;
+}
+
+void inRaSoCoCacUocSoNhieuHonKhoangN_M() {
+    int n, m;
+    cin >> n >> m;
+    int countN = demUocSo(n);
+    int countM = demUocSo(n);
+    for (size_t i = n + 1; i < m; i++)
+    {
+        if (demUocSo(i) > n && demUocSo(i) > m)
+        {
+            cout << i << " ";
+        }
+    }
+}
+
+void tongCacChuSoN() {
+    int n;
+    int sum = 0;
+    cin >> n;
+    while (n)
+    {
+        sum = sum + n%10;
+        n = n / 10;
+    }
+    cout << sum << endl;
+}
+
+void inRaSoLonNhat() {
+    int n;
+    cin >> n;
+    int max = 0;
+    while (n)
+    {
+        if (n % 10 > max)
+        {
+            max = n % 10;
+        }
+        n = n / 10;
+    }
+    cout << max << endl;
+}
+
+void inRaCacUocSoNguyenToN() {
+    int n;
+    cin >> n;
+    for (size_t i = 2; i <= n; i++)
+    {
+        if (n % i == 0 && SoNguyenTo(i))
+        {
+            cout << i  << " " << endl;
+        }
+    }
+}
+
+void soHanhPhuc() {
+    int n;
+    cin >> n;
+    int sum = 0;
+    int m = sqrt(n);
+    if (m*m == n)
+    {
+        for (size_t i = 1; i < m; i++)
+        {
+            if (n % i == 0)
+            {
+                sum = sum + i + n/i;
+            }
+        }
+    }
+    else
+    {
+        for (size_t i = 1; i <= m; i++)
+        {
+            if (n % i == 0)
+            {
+                sum = sum + i + n/i;
+            }
+        }
+    }
+    if (sum == 2*n)
+    {
+        cout << "La so hanh phuc" << endl;
+    }
+    else
+    {
+        cout << "Khong la so hanh phuc" << endl;
+    }
+}
+
+void soDoiXung() {
+    int n;
+    cin >> n;
+    int temp = n;
+    int sodoixung = 0;
+    while (temp)
+    {
+        sodoixung = sodoixung + temp%10;
+        
+    }
+    
 }
 
 int main() {
