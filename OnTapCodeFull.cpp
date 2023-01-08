@@ -476,6 +476,437 @@ void doiSoThapPhanSangNhiPhan(int n) {
 }
 //Kết thúc bài tập buổi 5
 
+void nhapMang2Chieu(int a[][50]) {
+    for (size_t i = 0; i < 50; i++)
+    {
+        for (size_t j = 0; j < 50; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+}
+
+void xuatMang2Chieu(int a[][50]) {
+    for (size_t i = 0; i < 50; i++)
+    {
+        for (size_t j = 0; j < 50; j++)
+        {
+            cout << a[i][j] << " ";
+        }
+    }
+    cout << endl;
+}
+
+void inCacPhanTuTrenDuongCheoChinh() {
+    int a[50][50];
+    int row;
+    int col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    if (row != col)
+    {
+        cout << "Khong phai ma tran vuong";
+    }
+    else
+    {
+        int i = 0;
+        int j = 0;
+        while (i != row)
+        {
+            cout << a[i][j] << " ";
+            i++; j++;
+        }
+    }
+}
+
+void inCacPhanTuNamTrenBien() {
+    int a[50][50];
+    int row, col;
+    cin >> row;
+    cin >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        if (i == 0 || i == row-1)
+        {
+            for (size_t j = 0; j < col; j++)
+            {
+                cout << a[i][j] << " ";
+            }
+            cout << endl;
+        }
+        else
+        {
+            cout << a[i][0] << " " << a[i][col-1] << endl;
+        }
+    }
+}
+
+void inTongMoiHang() {
+    int a[50][50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+        
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        int sum = 0;
+        for (size_t j = 0; j < col; j++)
+        {
+            sum = sum + a[i][j];
+        }
+        cout << sum << endl;
+    }
+}
+
+void inTongMoiCot() {
+    int a[50][50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < col; i++)
+    {
+        int sum = 0;
+        for (size_t j = 0; j < row; j++)
+        {
+            sum = sum + a[j][i];
+        }
+        cout << sum << endl;
+    }
+}
+
+void inHangCoTongLonNhat() {
+    int a[50][50];
+    int sum[50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            sum[i] = sum[i] + a[i][j];
+        }
+    }
+    int max = 0;
+    int pos = 0;
+    for (size_t i = 0; i < row; i++)
+    {
+        if (max < sum[i])
+        {
+            max = sum[i];
+            pos = i;
+        }
+    }
+    for (size_t i = 0; i < col; i++)
+    {
+        cout << a[pos][i];
+    }
+    
+}
+
+void inCotCoTongLonNhat() {
+    int a[50][50];
+    int sum[50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            sum[i] = sum[i] + a[j][i];
+        }
+    }
+    int max = 0;
+    int pos = 0;
+    for (size_t i = 0; i < row; i++)
+    {
+        if (sum[i] > max)
+        {
+            max = sum[i];
+            pos = i;
+        }
+    }
+    for (size_t i = 0; i < col; i++)
+    {
+        cout << a[i][pos] << " ";
+    }
+}
+
+void inGiaTriLonNhatMoiHang() {
+    int a[50][50];
+    int row, col;
+    cin >> row, col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        int max = a[i][0];
+        for (size_t j = 0; j < col; j++)
+        {
+            if (a[i][j] > max)
+            {
+                max = a[i][j];
+            }
+        }
+        cout << max << endl;
+    }
+}
+
+void inGiaTriNhoNhatMoiCot() {
+    int a[50][50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < col; i++)
+    {
+        int min = a[0][i];
+        for (size_t j = 0; j < row; j++)
+        {
+            if (a[j][i] < min)
+            {
+                min = a[j][i];
+            }
+        }
+        cout << min << endl;
+    }
+}
+
+void sapXepThuTuGiamDanMoiHang() {
+    int a[50][50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col-1; j++)
+        {
+            for (size_t k = 0; k < col; k++)
+            {
+                int temp = 0;
+                if (a[i][k] < a[i][k+1])
+                {
+                    temp = a[i][k];
+                    a[i][k] = a[i][k+1];
+                    a[i][k+1] = temp;
+                }
+            }
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cout << a[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void sapXepThuTuTangDanMoiHang() {
+    int a[50][50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        
+        for (size_t j = 0; j < col; j++)
+        {
+            int temp = 0;
+            for (size_t k = 0; k < col - 1; k++)
+            {
+                if (a[i][k] > a[i][k+1])
+                {
+                    temp = a[i][k+1];
+                    a[i][k+1] = a[i][k];
+                    a[i][k] = temp;
+                }
+            }
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cout << a[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void sapXepThuTuGiamDanMoiCot() {
+    int a[50][50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < col; i++)
+    {
+        for (size_t j = 0; j < row; j++)
+        {
+            for (size_t k = 0; k < row-1; k++)
+            {
+                int temp = 0;
+                if (a[k][i] < a[k+1][i])
+                {
+                    temp = a[k][i];
+                    a[k][i] = a[k+1][i];
+                    a[k+1][i] = temp;
+                }
+            }          
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cout << a[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void sapXepThuTuTangDanMoiCot() {
+    int a[50][50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < col; i++)
+    {
+        for (size_t j = 0; j < row-1; j++)
+        {
+            for (size_t k = 0; k < row; k++)
+            {
+                int temp = 0;
+                if (a[k][i] > a[k+1][i])
+                {
+                    temp = a[k+1][i];
+                    a[k+1][i] = a[k][i];
+                    a[k][i] = temp;
+                }
+            }
+        }
+    }
+    
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cout << a[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+bool SoChinhPhuong(int n) {
+    int sqrtN = sqrt(n);
+    if (sqrtN * sqrtN == n)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void inRaSoChinhPhuongMoiCot() {
+    int a[50][50];
+    int row, col;
+    cin >> row >> col;
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            cin >> a[i][j];
+        }
+    }
+    for (size_t i = 0; i < row; i++)
+    {
+        for (size_t j = 0; j < col; j++)
+        {
+            if (SoChinhPhuong(a[j][i]))
+            {
+                cout << a[j][i] << " ";
+            }
+        }
+        cout << endl;
+    }
+    
+}
+
 int main() {
 
 }
