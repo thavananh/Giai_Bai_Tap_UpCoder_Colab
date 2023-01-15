@@ -1,30 +1,19 @@
 #include <iostream>
 using namespace std;
 
-size_t giaithua(int n) {
-    size_t value = 1;
-    for (size_t i = 2; i <= n; i++)
+int TimSo0TanCungGiaiThua(int n) { // solution phân tích thừa số nguyên tố xong đếm số 5 là xong =))
+    int count = 0;
+    for (size_t i = 5; n/i >= 1; i*=5)
     {
-        value = value * i;
+        count = count + n / i;
     }
-    return value;
+    return count;
 }
 
 int main() {
-    size_t  n;
+    int n;
     cin >> n;
-    size_t  m = giaithua(n);
-    size_t  count = 0;
-    while (m)
-    {
-        if (m % 10 == 0)
-        {
-            count++;
-        }
-        
-        m = m / 10;
-    }
-    cout << count;
+    cout << TimSo0TanCungGiaiThua(n);
     system("Pause");
     
 }
