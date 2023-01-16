@@ -53,4 +53,5 @@ int main()
         count = 1;
         temp = a[i];
     }
+    system("Pause");
 }
