@@ -46,7 +46,7 @@ int main() {
         int q;
         cin >> q;
         while (q--)
-        {
+        {                                                           // -> sử dụng set
             int x; cin >> x;
             if (s.count(x) != 0)
             {
@@ -58,9 +58,6 @@ int main() {
             }
             
         }
-        
-        
-        
     }
     
     system("Pause");
