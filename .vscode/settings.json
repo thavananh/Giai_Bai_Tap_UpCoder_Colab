@@ -44,6 +44,7 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "iomanip": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "set": "cpp"
     }
 }
