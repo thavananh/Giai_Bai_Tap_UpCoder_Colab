@@ -45,6 +45,11 @@
         "xutility": "cpp",
         "iomanip": "cpp",
         "map": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "algorithm": "cpp",
+        "string": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp",
+        "xtree": "cpp"
     }
 }
