@@ -1,45 +1,24 @@
 #include <iostream>
 using namespace std;
+struct PhanSo {
+    int tu, mau;
+};
+PhanSo operator&= (PhanSo a, PhanSo b);
 
-int main(){
-    int a[50][50];
-    int row, col;
-    cin >> row >> col;
-    for (size_t i = 0; i < row; i++)
+int main() {
+    PhanSo p1, p2, p3;
+    p1.tu = 1;
+    p1.mau = 2;
+    p2.tu = 1;
+    p2.mau = 3;
+    p3 = p1 = p2;
+}
+
+PhanSo operator&= (PhanSo a, PhanSo b) {
+    PhanSo rs;
+    if (a.tu == b.tu && a.mau == b.mau)
     {
-        for (size_t j = 0; j < col; j++)
-        {
-            cin >> a[i][j];
-        }
+        rs = 1;
     }
-    for (size_t i = 0; i < row; i++)
-    {
-        
-        for (size_t j = 0; j < col; j++)
-        {
-            int temp = 0;
-            for (size_t k = 0; k < col - 1; k++)
-            {
-                if (a[i][k] > a[i][k+1])
-                {
-                    temp = a[i][k+1];
-                    a[i][k+1] = a[i][k];
-                    a[i][k] = temp;
-                }
-                
-            }
-            
-        }
-        
-    }
-    cout << "\n\n\n";
-    for (size_t i = 0; i < row; i++)
-    {
-        for (size_t j = 0; j < col; j++)
-        {
-            cout << a[i][j] << " ";
-        }
-        cout << endl;
-    }
-    system("Pause");
+    return rs;
 }
