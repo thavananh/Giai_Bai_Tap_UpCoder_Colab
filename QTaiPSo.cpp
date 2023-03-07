@@ -35,7 +35,7 @@ bool operator == (PhanSo a, PhanSo b) {
 }
 
 bool operator != (PhanSo a, PhanSo b) {
-    if (a.mau != b.mau){
+    if (a.mau != b.mau || a.tu != b.tu){
         return true;
     }
     else {
