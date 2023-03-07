@@ -72,7 +72,7 @@ bool operator < (tamgiac tg1, tamgiac tg2) {
 }
 
 bool operator == (tamgiac tg1, tamgiac tg2) {
-    if (tg1.x == tg2.x && tg1.y == tg2.y && tg1.z == tg2.z && tg1.t == tg2.t && tg1.k == tg2.k && tg1.f == tg2.f)
+    if ((tg1.x == tg2.x && tg1.y == tg2.y && tg1.z == tg2.z && tg1.t == tg2.t && tg1.k == tg2.k && tg1.f == tg2.f) && (chuvitamgiac(tg1) == chuvitamgiac(tg2)))
     {
         return true;
     }
