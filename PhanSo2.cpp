@@ -9,18 +9,21 @@ struct MangPhanSo {
 
 struct PhanSo {
     int a, b;
-    friend int rutgonphanso(int a, int b);
 };
 
 int gcd(int a, int b) {
-    if (a > b)
+    while (a != 0 && b != 0)
     {
-        a = a % b; 
+        if (a > b)
+        {
+            a = a % b; 
+        }
+        else
+        {
+            b = b % a;
+        }
     }
-    else
-    {
-        b = b % a;
-    }
+    
     if (a > 0)
     {
         return a;
@@ -28,9 +31,7 @@ int gcd(int a, int b) {
     return b; 
      
 }
-int rutgonphanso(int a, int b) {
-    int _gcd = gcd(a, b); 
-}
+
 
 istream& operator >> (istream &input, PhanSo &p) {
     input >> p.a >> p.b;
@@ -38,7 +39,7 @@ istream& operator >> (istream &input, PhanSo &p) {
 }
 
 ostream& operator << (ostream &output, PhanSo p) {
-    output << p.a << p.b;
+    output << p.a << "/" << p.b;
     return output;
 }
 
@@ -58,6 +59,9 @@ PhanSo operator + (PhanSo p1, PhanSo p2) {
     PhanSo rs;
     rs.a = p1.a * p2.b + p1.b * p2.a;
     rs.b = p1.b * p2.b;
+    int val_gcd = gcd(rs.a, rs.b);
+    rs.a = rs.a / val_gcd;
+    rs.b = rs.b / val_gcd;
     return rs;
 }
 
@@ -81,8 +85,10 @@ ostream& operator << (ostream &output, MangPhanSo mps) {
 
 int main() {
     PhanSo p1, p2, p3, p4;
+    cin >> p1 >> p2 >> p3;
     p4 = p1 + p2 + p3;
-
+    cout << p4 << endl;
+    system("Pause");
 
     return 0;
 }
