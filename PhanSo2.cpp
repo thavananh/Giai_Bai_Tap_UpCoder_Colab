@@ -1,94 +1,87 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-struct MangPhanSo {
-    int numberOfElement;
-    int a[100];
-    int b[100];
+struct PhanSo{
+    int tu, mau;
+    void operator = (int x){
+        tu = x;
+        mau = 1;
+    }
 };
-
-struct PhanSo {
-    int a, b;
+template <typename T>
+struct Mang {
+	int n;
+	T a[100];
+	T& operator [] (int i){
+		return a[i];
+	}
 };
+istream& operator >> (istream &in, PhanSo &p);
+ostream& operator << (ostream &out, PhanSo p);
+PhanSo operator + (PhanSo p1, PhanSo p2);
+bool operator == (PhanSo p1, PhanSo p2);
+bool operator != (PhanSo p1, PhanSo p2);
+PhanSo RutGon(PhanSo p);
 
-int gcd(int a, int b) {
-    while (a != 0 && b != 0)
-    {
-        if (a > b)
-        {
-            a = a % b; 
-        }
-        else
-        {
-            b = b % a;
-        }
-    }
-    
-    if (a > 0)
-    {
-        return a;
-    }
-    return b; 
-     
+template <typename T>
+istream& operator >> (istream &in, Mang<T> &m);
+template <typename T>
+ostream& operator << (ostream &out, Mang<T> m);
+template <typename T>
+T tongPhanTu(Mang<T> m);
+
+int main(){
+    Mang<PhanSo> mb;
+	cin >> mb;
+	cout << tongPhanTu<PhanSo>(mb) << endl;
+    return 0;
 }
-
-
-istream& operator >> (istream &input, PhanSo &p) {
-    input >> p.a >> p.b;
-    return input;
+istream& operator >> (istream &in, PhanSo &p){
+   in >> p.tu >> p.mau;
+   return in;
 }
-
-ostream& operator << (ostream &output, PhanSo p) {
-    output << p.a << "/" << p.b;
-    return output;
+ostream& operator << (ostream &out, PhanSo p){
+    out << p.tu << "/" << p.mau << endl;
+    return out;
 }
-
-bool operator == (PhanSo p1, PhanSo p2) { // có bug ở đây =))
-    if (p1.b == p2.b && p1.a == p2.a)
-    {
-        return true; 
-    }
-    return false; 
+PhanSo operator + (PhanSo p1, PhanSo p2){
+    PhanSo T;
+    T.tu = p1.tu*p2.mau + p2.tu*p1.mau;
+    T.mau = p1.mau*p2.mau;
+    return RutGon(T);
 }
-
-bool operator != (PhanSo p1, PhanSo p2) { 
+bool operator == (PhanSo p1, PhanSo p2){
+    return (p1.tu*p2.mau == p2.tu*p1.mau);
+}
+bool operator != (PhanSo p1, PhanSo p2){
     return !(p1 == p2);
 }
-
-PhanSo operator + (PhanSo p1, PhanSo p2) {
-    PhanSo rs;
-    rs.a = p1.a * p2.b + p1.b * p2.a;
-    rs.b = p1.b * p2.b;
-    int val_gcd = gcd(rs.a, rs.b);
-    rs.a = rs.a / val_gcd;
-    rs.b = rs.b / val_gcd;
-    return rs;
+PhanSo RutGon(PhanSo p){
+    int a = __gcd(p.tu, p.mau);
+    p.tu /= a;
+    p.mau /= a;
+    return p;
 }
-
-istream& operator >> (istream &input, MangPhanSo &mps) {
-    input >> mps.numberOfElement;
-    for (size_t i = 0; i < mps.numberOfElement; i++)
-    {
-        input >> mps.a[i];
-        input >> mps.b[i];
-    }
-    return input; 
+template <typename T>
+istream& operator >> (istream &in, Mang<T> &m){
+	m.n = 0;
+	while (in >> m[m.n]) m.n++;
+	return in;
 }
-
-ostream& operator << (ostream &output, MangPhanSo mps) {
-    for (size_t i = 0; i < mps.numberOfElement; i++)
-    {
-        output << mps.a[i] << "/" << mps.b; 
-    }
-    return output; 
+template <typename T>
+ostream& operator << (ostream &out, Mang<T> m){
+	for (int i = 0; i < m.n; i++){
+		out << m[i] << " ";
+	}
+	return out;
 }
-
-int main() {
-    PhanSo p1, p2, p3, p4;
-    cin >> p1 >> p2 >> p3;
-    p4 = p1 + p2 + p3;
-    cout << p4 << endl;
-    system("Pause");
-
-    return 0;
+template <typename T>
+T tongPhanTu(Mang<T> m){
+	T kq;
+	kq = 0;
+	for (int i = 0; i < m.n; i++){
+		kq = kq + m[i];
+	}
+	return kq;
 }
