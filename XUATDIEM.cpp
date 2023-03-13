@@ -1,0 +1,134 @@
+#include <iostream>
+#include <map>
+#include <vector>
+using namespace std;
+
+struct XuatDiem {
+    int x, y;
+};
+
+struct M1C_Diem {
+    int n;
+    struct XuatDiem d[100];
+    public:
+        XuatDiem timmax(M1C_Diem md);
+        XuatDiem tong(M1C_Diem md);
+};
+
+istream& operator >> (istream &is, XuatDiem &d) {
+    is >> d.x >> d.y;
+    return is;
+}
+
+ostream& operator << (ostream &os, XuatDiem d) {
+    os << "(" << d.x << "," << d.y << ")";
+    return os;
+}
+
+bool operator == (XuatDiem d1, XuatDiem d2) {
+    if (d1.x == d2.x && d1.y == d2.y)
+    {
+        return true;
+    }
+    return false;
+    
+}
+
+bool operator < (XuatDiem d1, XuatDiem d2) {
+    if (d1.x < d1.y)
+    {
+        return true;
+    }
+    else if (d1.x == d2.x)
+    {
+        if (d1.y < d2.y)
+        {
+            return true;
+        }
+        
+    }
+    return false;
+}
+
+XuatDiem operator + (XuatDiem d1, XuatDiem d2) {
+    XuatDiem rs;
+    rs.x = d1.x + d2.x;
+    rs.y = d1.y + d2.y;
+    return rs;
+}
+
+istream& operator >> (istream &is, M1C_Diem &md) {
+    md.n = 0;
+    while (cin >> md.d[md.n])
+    {
+        md.n++;
+    }
+    return is;
+}
+
+ostream& operator << (ostream &os, M1C_Diem md) {
+    for (size_t i = 0; i < md.n; i++)
+    {
+        cout << md.d[i] << '\n';
+    }
+    return os;
+}
+
+XuatDiem tong (M1C_Diem md) {
+    XuatDiem rs;
+    rs.x = 0;
+    rs.y = 0;
+    for (size_t i = 0; i < md.n; i++)
+    {
+        rs.x = rs.x + md.d[i].x;
+        rs.y = rs.y + md.d[i].y;
+    }
+    return rs;
+}
+
+XuatDiem timmax(M1C_Diem md) {
+    XuatDiem rs;
+    map<int, int> mp1;
+    //map<int, int> mp2;
+    for (int i = 0; i < md.n; ++i)
+    {
+        int x = md.d[i].x;
+        mp1[x]++;
+    }
+    // map<int, int>::iterator it1;
+    // it1 = mp1.end();
+    // it1--;
+    // vector<int>v;
+
+    // if (it1->second > 2)
+    // {
+    //     for (size_t i = 0; i < md.n; i++)
+    //     {
+    //         if (it1->second == md.d[i].x)
+    //         {
+    //             v.push_back(i);
+    //         }
+    //     }
+        
+    // }
+    // for (size_t i = 0; i < v.size(); i++)
+    // {
+    //     mp2[v[i]]++;
+    // }
+    // map<int, int>::iterator it2;
+    // it2 = mp2.end();
+    // it2--;
+    // rs.x = it1->first;
+    // rs.y = it2->first;
+    return rs;
+    
+    
+    
+}
+
+int main() {
+   M1C_Diem md;
+   cin >> md;
+   cout << timmax(md) << '\n';
+   cout << tong(md);
+}
