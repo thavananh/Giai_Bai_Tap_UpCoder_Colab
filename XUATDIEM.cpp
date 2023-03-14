@@ -89,37 +89,45 @@ XuatDiem tong (M1C_Diem md) {
 XuatDiem timmax(M1C_Diem md) {
     XuatDiem rs;
     map<int, int> mp1;
-    //map<int, int> mp2;
+    map<int, int> mp2;
     for (int i = 0; i < md.n; ++i)
     {
         int x = md.d[i].x;
         mp1[x]++;
     }
-    // map<int, int>::iterator it1;
-    // it1 = mp1.end();
-    // it1--;
-    // vector<int>v;
+    map<int, int>::iterator it1;
+    it1 = mp1.end();
+    it1--;
+    vector<int>v;
 
-    // if (it1->second > 2)
-    // {
-    //     for (size_t i = 0; i < md.n; i++)
-    //     {
-    //         if (it1->second == md.d[i].x)
-    //         {
-    //             v.push_back(i);
-    //         }
-    //     }
+    if (it1->second > 2)
+    {
+        for (size_t i = 0; i < md.n; i++)
+        {
+            if (it1->second == md.d[i].x)
+            {
+                v.push_back(i);
+            }
+        }
         
-    // }
-    // for (size_t i = 0; i < v.size(); i++)
-    // {
-    //     mp2[v[i]]++;
-    // }
-    // map<int, int>::iterator it2;
-    // it2 = mp2.end();
-    // it2--;
-    // rs.x = it1->first;
-    // rs.y = it2->first;
+    }
+    for (size_t i = 0; i < v.size(); i++)
+    {
+        mp2[v[i]]++;
+    }
+    int max = md.d[v[0]].y;
+    int oldmax = -999999;
+    for (size_t i = 0; i < v.size(); i++)
+    {
+        if (md.d[v[i]].y > max)
+        {
+            max = md.d[v[i]].y;          
+        }
+    }
+    rs.x = it1->first;
+    rs.y = max;   
+
+
     return rs;
     
     
