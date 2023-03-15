@@ -51,8 +51,10 @@ void Phanso::nhap() {
     cin >> this->a;
     cin >> this->b;
 }
-void Phanso::xuat(){
-    cout << this->a << "/" << this->b << '\n';
+
+Phanso::Phanso(int a, int b) {
+    this->a = a;
+    this->b = b;
 }
 
 void Phanso::phansonghichdao(){
