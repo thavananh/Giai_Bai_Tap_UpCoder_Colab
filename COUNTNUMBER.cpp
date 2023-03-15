@@ -1,26 +1,24 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <algorithm>
 using namespace std;
 
 int main() {
     map <int, int>mp;
     int n; cin >> n;
-    vector<int>v;
-    vector<int>::iterator it;
+    int a[10000];
     for (int i = 0; i < n; ++i)
     {
-        int x; cin >> x;
-        v.push_back(x);
-        mp[x]++;
+        cin >> a[i];
+        mp[a[i]]++;
     }
-    it = unique(v.begin(), v.begin() + v.size());
-    v.resize(distance(v.begin(), it));
-    for (it = v.begin(); it != v.end(); ++it)
+    for (int i = 0; i < n; ++i)
     {
-        cout << *it << " ";
+        if (mp[a[i]] != 0)
+        {
+            cout << mp[a[i]] << " ";
+            mp[a[i]] = 0;
+        }
     }
-    
     system("Pause");
 }
