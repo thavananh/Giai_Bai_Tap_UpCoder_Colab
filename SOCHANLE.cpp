@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 struct SOCHANLE
@@ -21,50 +22,56 @@ ostream& operator << (ostream &os, SOCHANLE scl) {
 
 int viTri(SOCHANLE scl) {
     int array[100];
-    int result = 0;
+    int k = scl.a;
     int count = 0;
-    while (scl.a > 0)
-    {   
-        array[count] = scl.a % 10;
-        scl.a = scl.a / 10;
-        count++;
-    }
-    int j = 0;
-    for (size_t i = count; i > 0; i--)
+    int rs = 0;
+    while (k > 0)
     {
+       k /= 10;
+       count++;
+    }
+    int mu = count;
+    int temp = 0;
+    temp = scl.a;
+    for (size_t i = 0; i < count; i++)
+    { 
+        array[i] = temp / (int)pow(10, mu-1); //NongLam@1995 hoac NongLam1995
+        temp = scl.a % (int)pow(10, mu-1);
         if (array[i] % 2 == 0)
         {
-            result = (result + j)*10;
+            rs = rs + i;
+            rs = rs * 10;
         }
-        j++;
+        mu--;
     }
-    return result;
+    return rs/10;
+    
 }
 
-int tongThanhPhan(SOCHANLE scl, int option = 0) {
+int tongThanhPhan(int a, int option = 0) {
     int sum = 0;
     if (option == 0)
     {
-        while (scl.a > 0)
+        while (a > 0)
         {
-            int k = scl.a % 10;
+            int k = a % 10;
             if (k % 2 != 0)
             {
                 sum = sum + k;
             }
-            scl.a = scl.a / 10;
+            a = a / 10;
         }
     }
     else
     {
-        while (scl.a > 0)
+        while (a > 0)
         {
-            int k = scl.a % 10;
+            int k = a % 10;
             if (k % 2 == 0)
             {
                 sum = sum + k;
             }
-            scl.a = scl.a / 10;
+            a = a / 10;
         }
     }
     return sum;  
@@ -89,6 +96,7 @@ int main() {
     cin >> option;
     cout << viTri(scl_1) << '\n';
     cout << viTri(scl_2) << '\n';
+   
     if (scl_1 < scl_2)
     {
         cout << "TRUE" << '\n';
@@ -97,8 +105,8 @@ int main() {
     {
         cout << "FALSE" << '\n';
     }
-    cout << tongThanhPhan(scl_1, option) << '\n';
-    cout << tongThanhPhan(scl_2, option) << '\n';
+    cout << tongThanhPhan(scl_1.a, option) << '\n';
+    cout << tongThanhPhan(scl_2.a, option) << '\n';
     
     system("Pause");
 }
