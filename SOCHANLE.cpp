@@ -9,19 +9,8 @@ struct SOCHANLE
         int viTri(SOCHANLE);
         int tongThanhPhan(SOCHANLE, int);
 };
-
-istream& operator >> (istream &is, SOCHANLE &scl) {
-    is >> scl.a;
-    return is;
-}
-
-ostream& operator << (ostream &os, SOCHANLE scl) {
-    os << scl.a;
-    return os;
-} 
-
 int viTri(SOCHANLE scl) {
-    int array[100];
+    int array[100000];
     int k = scl.a;
     int count = 0;
     int rs = 0;
@@ -31,22 +20,29 @@ int viTri(SOCHANLE scl) {
        count++;
     }
     int mu = count;
-    int temp = 0;
-    temp = scl.a;
+   
     for (size_t i = 0; i < count; i++)
     { 
-        array[i] = temp / (int)pow(10, mu-1); //NongLam@1995 hoac NongLam1995
-        temp = scl.a % (int)pow(10, mu-1);
-        if (array[i] % 2 == 0)
-        {
-            rs = rs + i;
-            rs = rs * 10;
-        }
+        array[i] = (scl.a / (int)pow(10, mu - 1)) % 10;
         mu--;
     }
+    for (size_t i = 0; i < count; i = i + 2)
+    {
+        rs = (rs + array[i])*10;
+    }
     return rs/10;
-    
 }
+istream& operator >> (istream &is, SOCHANLE &scl) {
+    is >> scl.a;
+    return is;
+}
+
+ostream& operator << (ostream &os, SOCHANLE scl) {
+    os << viTri(scl);
+    return os;
+} 
+
+
 
 int tongThanhPhan(int a, int option = 0) {
     int sum = 0;
@@ -94,19 +90,18 @@ int main() {
     int option;
     cin >> scl_1 >> scl_2;
     cin >> option;
-    cout << viTri(scl_1) << '\n';
-    cout << viTri(scl_2) << '\n';
+    cout << scl_1 << '\n';
+    cout << scl_2 << '\n';
    
     if (scl_1 < scl_2)
     {
-        cout << "TRUE" << '\n';
+        cout << "true" << '\n';
     }
     else
     {
-        cout << "FALSE" << '\n';
+        cout << "false" << '\n';
     }
     cout << tongThanhPhan(scl_1.a, option) << '\n';
     cout << tongThanhPhan(scl_2.a, option) << '\n';
-    
-    system("Pause");
+
 }
