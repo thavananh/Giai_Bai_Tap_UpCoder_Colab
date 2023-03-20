@@ -1,8 +1,71 @@
+// #include <iostream>
+// using namespace std;
+
+// struct PhanSo {
+//     int tu, mau;
+// };
+
+// istream& operator >> (istream &is, PhanSo &p) {
+//     is >> p.tu >> p.mau;
+//     return is;
+// }
+
+// ostream& operator << (ostream &os, PhanSo p) {
+//     os << p.tu << "/" << p.mau;
+//     return os;
+// }
+
+// bool operator > (PhanSo p1, PhanSo p2) {
+//     return (float)p1.tu / p1.mau > (float)p2.tu / p2.mau;
+// }
+
+// template<typename T>
+// T timmax(T a, T b, T c) {
+//     T rs = a;
+//     if (b > rs)
+//     {
+//         rs = b;
+//     }
+//     if (c > rs)
+//     {
+//         rs = c;
+//     }
+//     return rs;
+// }
+
+// template<typename T>
+// void nhap() {
+//     T a, b, c;
+//     cin >> a >> b >> c;
+//     cout << timmax(a, b, c);
+// }
+
+// int main() {
+//     nhap<PhanSo>();
+//     system("Pause");
+// }
+
+//Thanks Tuấn Anh nhiều
 #include <iostream>
 using namespace std;
 
-struct PhanSo {
+struct PhanSo
+{
     int tu, mau;
+    public:
+        int ucln(PhanSo);
+};
+
+template <typename T>
+struct Mang
+{
+    int n = 0;
+    T array[100];
+    T &operator[](int i) {
+        return array[i];
+    }
+    public:
+        T tinhTong(Mang<T>m);
 };
 
 istream& operator >> (istream &is, PhanSo &p) {
@@ -11,44 +74,105 @@ istream& operator >> (istream &is, PhanSo &p) {
 }
 
 ostream& operator << (ostream &os, PhanSo p) {
-    os << p.tu << p.mau;
+    os << p.tu << "/" << p.mau;
     return os;
 }
 
-bool operator == (PhanSo p1, PhanSo p2) {
-    return (float)p1.tu / p1.mau == (float)p2.tu / p2.mau;
+// template <typename T>
+// istream& operator >> (istream &is, Mang<T>&m) {
+//     m.n = 0;
+//     T x;
+//     while (is >> x) 
+//     {
+//         m[m.n] = x;
+//         m.n++;
+//     }
+//     return is;
+// }
+
+template<typename T>
+ostream& operator << (ostream &os, Mang<T>m) {
+    for (size_t i = 0; i < m.n; i++)
+    {
+        os << m.array[i];
+    }
+    return os;
+}
+
+int ucln(PhanSo p) {
+    int a = p.tu;
+    int b = p.mau;
+    while (a != 0 && b != 0)
+    {
+        if (a > b)
+        {
+            a = a % b;
+        }
+        else
+        {
+            b = b % a;
+        }
+    }
+    if (a > 0) {
+        return a;
+    }
+    return b;
+}
+
+PhanSo operator + (PhanSo p1, PhanSo p2) {
+    PhanSo rs;
+    rs.tu = p1.tu * p2.mau + p2.tu * p1.mau;
+    rs.mau = p1.mau * p2.mau;
+    int k = ucln(rs);
+    rs.tu /= k;
+    rs.mau /= k;
+    return rs;
 }
 
 template<typename T>
-void nhap() {
-    T a, b;
-    cin >> a >> b;
-    if (a == b)
+T tinhTong(Mang<T>m) {
+    T rs = m.array[0];
+    for (size_t i = 1; i < m.n; i++)
     {
-        cout << "true";
+        rs = rs + m.array[i];
+    }
+    return rs;
+}
+int main() {
+    char choice;
+    Mang<int>m1;
+    Mang<PhanSo>m2;
+    while (cin >> choice)
+    {
+        switch (choice)
+        {
+        case 'a':
+            cin >> m1.array[m1.n];
+            m1.n++;
+            break;
+        
+        case 'b':
+            cin >> m2.array[m2.n];
+            m2.n++;
+            break;
+        }
+        
+    }
+    if (m1.n == 0)
+    {
+        cout << "khong co" << '\n';
     }
     else
     {
-        cout << "false";
+        cout << tinhTong<int>(m1) << '\n';
     }
-     
-}
-
-int main() {
-    char c; cin >> c;
-    switch (c)
+    if (m2.n == 0)
     {
-    case 'a':
-        nhap<int>();
-        break;
-    case 'b':
-        nhap<float>();
-        break;
-    case 'c':
-        nhap<PhanSo>();
-        break;
-    default:
-        break;
+        cout << "khong co" << '\n';
     }
-
+    else
+    {
+        cout << tinhTong<PhanSo>(m2) << '\n';
+    }
+    system("Pause");
 }
