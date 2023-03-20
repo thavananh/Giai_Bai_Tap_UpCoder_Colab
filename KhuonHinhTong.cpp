@@ -1,3 +1,4 @@
+//Thanks Tuấn Anh nhiều
 #include <iostream>
 using namespace std;
 
@@ -8,19 +9,16 @@ struct PhanSo
         int ucln(PhanSo);
 };
 
-template<typename T>
-struct M1C
+template <typename T>
+struct Mang
 {
-    static int n;
+    int n = 0;
     T array[100];
-    T &operator[](int i){
+    T &operator[](int i) {
         return array[i];
     }
-    M1C(){
-        n = 0;
-    }
     public:
-        T tinhTong(M1C<T>m);
+        T tinhTong(Mang<T>m);
 };
 
 istream& operator >> (istream &is, PhanSo &p) {
@@ -33,24 +31,25 @@ ostream& operator << (ostream &os, PhanSo p) {
     return os;
 }
 
-template<typename T>
-istream& operator >> (istream &is, M1C<T>&m) {
-    T x;
-    while (is >> x)
-    {
-        m.array[m.n] = x;
-        m.n++;
-    }
-    return is;
-}
+// template <typename T>
+// istream& operator >> (istream &is, Mang<T>&m) {
+//     m.n = 0;
+//     T x;
+//     while (is >> x) 
+//     {
+//         m[m.n] = x;
+//         m.n++;
+//     }
+//     return is;
+// }
 
 template<typename T>
-ostream& operator << (ostream &os, M1C<T>m) {
+ostream& operator << (ostream &os, Mang<T>m) {
     for (size_t i = 0; i < m.n; i++)
     {
-        os >> m.array[i];
+        os << m.array[i];
     }
-    
+    return os;
 }
 
 int ucln(PhanSo p) {
@@ -66,10 +65,8 @@ int ucln(PhanSo p) {
         {
             b = b % a;
         }
-        
     }
-    if (a > 0)
-    {
+    if (a > 0) {
         return a;
     }
     return b;
@@ -80,34 +77,55 @@ PhanSo operator + (PhanSo p1, PhanSo p2) {
     rs.tu = p1.tu * p2.mau + p2.tu * p1.mau;
     rs.mau = p1.mau * p2.mau;
     int k = ucln(rs);
-    rs.tu = rs.tu / k;
-    rs.mau = rs.mau / k;
+    rs.tu /= k;
+    rs.mau /= k;
     return rs;
 }
 
 template<typename T>
-T tinhTong(M1C<T>m) {
+T tinhTong(Mang<T>m) {
     T rs = m.array[0];
-    for (size_t i = 0; i < m.n; i++)
+    for (size_t i = 1; i < m.n; i++)
     {
-        rs =  rs + m.array[i];
+        rs = rs + m.array[i];
     }
     return rs;
 }
-
-int main(){
-   char c;
-   char k;
-   M1C<int>m1;
-   M1C<PhanSo>m2;
-   while (cin >> c)
-   {
-        k = c;
-        if (k = 'a')
+int main() {
+    char choice;
+    Mang<int>m1;
+    Mang<PhanSo>m2;
+    while (cin >> choice)
+    {
+        switch (choice)
         {
-            cin >> m1;
+        case 'a':
+            cin >> m1.array[m1.n];
+            m1.n++;
+            break;
+        
+        case 'b':
+            cin >> m2.array[m2.n];
+            m2.n++;
+            break;
         }
         
-   }
-    
+    }
+    if (m1.n == 0)
+    {
+        cout << "khong co" << '\n';
+    }
+    else
+    {
+        cout << tinhTong<int>(m1) << '\n';
+    }
+    if (m2.n == 0)
+    {
+        cout << "khong co" << '\n';
+    }
+    else
+    {
+        cout << tinhTong<PhanSo>(m2) << '\n';
+    }
+    system("Pause");
 }
