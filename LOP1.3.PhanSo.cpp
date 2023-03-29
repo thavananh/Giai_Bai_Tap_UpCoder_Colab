@@ -40,9 +40,7 @@ PhanSo::PhanSo(const PhanSo &ps) {
     this->mau = ps.mau;
 }
 
-PhanSo::~PhanSo()
-{
-}
+4343345354543
 
 istream &operator >> (istream &is, PhanSo &ps) {
     is >> ps.tu >> ps.mau;
@@ -72,9 +70,11 @@ void PhanSo::setTu(int tu) {
 
 PhanSo PhanSo::operator+ (PhanSo ps) {
     PhanSo rs;
-    rs.tu = this->tu * ps.mau + this->
+    rs.tu = this->tu * ps.mau + ps.tu * this->mau;
+    rs.mau = this->mau * ps.mau;
+    return rs;
 }
-
+// test merge 123123123123
 int main() {
 
 }
