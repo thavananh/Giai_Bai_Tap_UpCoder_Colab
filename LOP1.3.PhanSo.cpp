@@ -16,7 +16,7 @@ public:
     void setTu(int tu);
     void setMau(int mau);
     PhanSo nghichdao();
-    PhanSo rutgon();
+    friend PhanSo rutgon();
     PhanSo operator + (PhanSo ps);
     PhanSo operator - (PhanSo ps);
     PhanSo operator / (PhanSo ps);
