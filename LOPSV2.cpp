@@ -1,86 +1,75 @@
-#include<iostream>
+#include <iostream>
+#include <string>
+#include <iomanip>
 using namespace std;
 
 class Diem {
+    float a[100];
     int n;
-    float array[100];
     public:
-    Diem(int n = 1, float array[] = new float{1});
-    Diem(const Diem &dm);
+    void setN(int n);
+    int getN();
+    float& operator[](int i) {
+        return a[i];
+    }
+    Diem(int n = 1, float a[] = new float{1});
+    Diem(const Diem &d);
     ~Diem();
-    friend istream& operator >> (istream&, Diem&);
-    friend ostream& operator << (ostream&, Diem);
-    friend int tBC(Diem);
-     int get();
-    void set(int);
-    float& operator[] (int i) {
-        return array[i];
-    }
-    void operator = (const Diem &d) {
-        n = d.n;
-        for (size_t i = 0; i < n; i++)
+    friend istream& operator >> (istream &is, Diem &d);
+    friend ostream& operator << (ostream &os, Diem d);
+    float getDTB();
+    void operator = (Diem d) {
+        this->n = d.n;
+        for (size_t i = 0; i < d.n; i++)
         {
-            array[i] = d.array[i];
+            this->a[i] = d.a[i];
         }
+        
     }
-
 };
 
 class SinhVien {
-    string ten,  msv;
+    string hoten, msv;
     Diem d;
     public:
-        SinhVien(s);
-        SinhVien(const SinhVien &sv);
-        ~SinhVien();
-        friend istream operator >> (istream& , SinhVien&);
-        friend ostream operator << (ostream&, SinhVien );
+    SinhVien(string hoten = "", string msv = "", Diem d = Diem());
+    SinhVien(const SinhVien& sv);
+    ~SinhVien();
+    friend istream& operator >> (istream &is, SinhVien &sv);
+    friend ostream& operator << (ostream &os, SinhVien sv);
 };
 
-SinhVien::SinhVien() {
-    this->ten = this->msv = "";
-}
-
-SinhVien::SinhVien(const SinhVien &sv) {
-    this->ten = sv.ten;
-    this->msv = sv.msv;
-}
-
-Diem::Diem(int n, float array[]){
-        this->n = n;
-        for (size_t i = 0; i < n; i++)
-        {
-            this->array[i] = array[i];
-        }
-        
-}
-
-Diem::Diem(const Diem &dm){
-    this->n = dm.n;
-    for (size_t i = 0; i < dm.n; i++)
-    {
-        this->array[i] = array[i];
-    }
-}
-Diem::~Diem() {
-
-}
-
-int Diem::get() {
-    return this->n;
-}
-
-void Diem::set(int n) {
+// Bắt đầu xây dựng hàm cho lớp Điểm
+void Diem::setN(int n) {
     this->n = n;
 }
 
-istream& operator >> (istream &is, Diem &d) {
-    int x;
-    d.n = 0;
-    while (is >> x)
+int Diem::getN() {
+    return this->n;
+}
+
+Diem::Diem(int n, float a[]) {
+    this->n = n;
+    for (size_t i = 0; i < n; i++)
     {
-        d.array[d.n] = x;
-        d.n++;
+        this->a[i] = a[i];
+    }
+}
+
+Diem::Diem(const Diem &d) {
+    this->n = d.n;
+    for (size_t i = 0; i < d.n; i++)
+    {
+        this->a[i] = d.a[i];
+    }
+}
+Diem::~Diem(){}
+
+istream& operator >> (istream &is, Diem &d) {
+    d.n = 0;
+    while (is >> d.a[d.n])
+    {
+       d.n++;
     }
     return is;
 }
@@ -88,37 +77,53 @@ istream& operator >> (istream &is, Diem &d) {
 ostream& operator << (ostream &os, Diem d) {
     for (size_t i = 0; i < d.n; i++)
     {
-        os << d.array[i] << " ";
+        os << d.a[i];
     }
     return os;
 }
-istream operator >> (istream &is, SinhVien &sv) {
-    getline(is, sv.ten);
-    getline(is, sv.msv);
+
+float Diem::getDTB() {
+    float sum = 0;
+    for (size_t i = 0; i < n; i++)
+    {
+        sum = sum + a[i];
+    }
+    return sum / n;
+}
+
+// Kết thúc xây dựng hàm cho lớp Diem
+
+// Bắt đầu xây dựng hàm cho lớp SinhVien
+SinhVien::SinhVien(string hoten, string msv, Diem d) {
+    this->hoten = hoten;
+    this->msv = msv;
+    this->d = d;
+}
+
+SinhVien::SinhVien(const SinhVien &sv) {
+    this->hoten = sv.hoten;
+    this->msv = sv.msv;
+    this->d = sv.d;
+}
+
+SinhVien::~SinhVien(){}
+
+istream& operator >> (istream &is, SinhVien &sv) {
+    getline(is, sv.hoten);
+    is >> sv.msv;
     is >> sv.d;
     return is;
 }
 
-ostream operator << (ostream &os, SinhVien sv) {
-    os << sv.ten << '\n';
+ostream& operator << (ostream &os, SinhVien sv) {
+    os << sv.hoten << '\n';
     os << sv.msv << '\n';
-    os << sv.d;
+    os << "DTB: " << sv.d.getDTB();
     return os;
 }
 
-
-int tBC(Diem d) {
-    int sum = 0;
-    for (size_t i = 0; i < d.n; i++)
-    {
-        sum = sum + d.array[i];
-    }
-    return sum / d.n;
-}
-
 int main() {
-    float a[] = {1, 2};
-    Diem d1(2, a);
-    cout << d1;
-    system("Pause");
+    SinhVien sv;
+    cin >> sv;
+    cout << sv;
 }
