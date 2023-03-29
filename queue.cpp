@@ -10,7 +10,9 @@ int main(){
                 cout << v.front();
                 v.pop();
         }
+        eqweqweqe
         }
+
         
         else v.push(c);
     }
