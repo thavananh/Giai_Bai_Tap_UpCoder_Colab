@@ -16,11 +16,11 @@ public:
     void setTu(int tu);
     void setMau(int mau);
     PhanSo nghichdao();
-    friend PhanSo rutgon();
+    PhanSo rutgon();
+    int ucln(PhanSo ps);
     PhanSo operator + (PhanSo ps);
     PhanSo operator - (PhanSo ps);
     PhanSo operator / (PhanSo ps);
-
     ~PhanSo();
 };
 
@@ -39,8 +39,6 @@ PhanSo::PhanSo(const PhanSo &ps) {
     this->tu = ps.tu;
     this->mau = ps.mau;
 }
-
-4343345354543
 
 istream &operator >> (istream &is, PhanSo &ps) {
     is >> ps.tu >> ps.mau;
@@ -68,13 +66,62 @@ void PhanSo::setTu(int tu) {
     this->tu = tu;
 }
 
+int PhanSo::ucln(PhanSo ps) {
+    int a = ps.tu;
+    int b = ps.mau;
+    while (a != 0 && b != 0)
+    {
+        if (a > b)
+        {
+            a = a % b;
+        }
+        else
+        {
+            b = b % a;
+        }
+    }
+    if (a > 0)
+    {
+        return a;
+    }
+    return b;
+}
+
 PhanSo PhanSo::operator+ (PhanSo ps) {
     PhanSo rs;
     rs.tu = this->tu * ps.mau + ps.tu * this->mau;
     rs.mau = this->mau * ps.mau;
+    int k = ucln(rs);
+    rs.tu /= k;
+    rs.mau /= k;
     return rs;
 }
-// test merge 123123123123
-int main() {
 
+PhanSo PhanSo::nghichdao() {
+    PhanSo rs;
+    rs.tu = this->mau;
+    rs.mau = this->tu;
+    return rs;
 }
+
+PhanSo PhanSo::rutgon() {
+    PhanSo rs;
+    rs.tu = this->tu;
+    rs.mau = this->mau;
+    int k = ucln(rs);
+    rs.tu /= k;
+    rs.mau /= k;
+    return rs;
+}
+
+
+int main() {
+    PhanSo ps1;
+    cin >> ps1;
+    cout << ps1 << '\n';
+    cout << ps1.getTu() << '\n';
+    cout << ps1.getMau() << '\n';
+    cout << ps1.nghichdao() << '\n';
+    cout << ps1.rutgon() << '\n';
+    cout << ps1 + ps1.nghichdao() << '\n';
+}   
