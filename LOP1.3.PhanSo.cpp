@@ -17,9 +17,10 @@ public:
     void setMau(int mau);
     PhanSo nghichdao();
     PhanSo rutgon();
-    PhanSo operator + (PhanSo ps2);
-    PhanSo operator - (PhanSo ps2);
-    PhanSo operator / (PhanSo ps2);
+    PhanSo operator + (PhanSo ps);
+    PhanSo operator - (PhanSo ps);
+    PhanSo operator / (PhanSo ps);
+
     ~PhanSo();
 };
 
@@ -67,6 +68,11 @@ void PhanSo::setMau(int mau) {
 
 void PhanSo::setTu(int tu) {
     this->tu = tu;
+}
+
+PhanSo PhanSo::operator+ (PhanSo ps) {
+    PhanSo rs;
+    rs.tu = this->tu * ps.mau + this->
 }
 
 int main() {
