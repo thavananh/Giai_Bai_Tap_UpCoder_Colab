@@ -114,6 +114,9 @@ PhanSo PhanSo::rutgon() {
     return rs;
 }
 
+PhanSo::~PhanSo() {
+
+}
 
 int main() {
     PhanSo ps1;
@@ -124,4 +127,5 @@ int main() {
     cout << ps1.nghichdao() << '\n';
     cout << ps1.rutgon() << '\n';
     cout << ps1 + ps1.nghichdao() << '\n';
+    system("Pause");
 }   
