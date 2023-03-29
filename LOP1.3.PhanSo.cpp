@@ -40,9 +40,7 @@ PhanSo::PhanSo(const PhanSo &ps) {
     this->mau = ps.mau;
 }
 
-PhanSo::~PhanSo()
-{
-}
+4343345354543
 
 istream &operator >> (istream &is, PhanSo &ps) {
     is >> ps.tu >> ps.mau;
