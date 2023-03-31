@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <iomanip>
 using namespace std;
 
@@ -7,7 +8,7 @@ class Diem {
     float a[100];
     public:
         //Hàm khởi tạo - hàm hủy
-        Diem(int n = 1, float a[] = new float{1});
+        Diem(int n = 1, float* a = nullptr);
         Diem(const Diem &d);
         ~Diem();
         //Hàm get - set
@@ -21,7 +22,7 @@ class Diem {
             return a[i];
         } 
         void operator = (Diem d) {
-            int n = d.n;
+            n = d.n;
             for (size_t i = 0; i < d.n; i++)
             {
                 this->a[i] = d.a[i];
@@ -47,14 +48,15 @@ class SinhVien {
         //Quá tải toán tử nhập - xuất >> <<
         friend istream& operator >> (istream &is, SinhVien &sv);
         friend ostream& operator << (ostream &os, SinhVien sv);
+        bool operator < (SinhVien sv);
 };
 
 class MangSinhVien {
-    int n;
+    int soluongsinhvien;
     SinhVien sv[100];
     public:
         //Hàm khởi tạo - hủy
-        MangSinhVien(int n = 1, SinhVien sv[] = new SinhVien{SinhVien()});
+        MangSinhVien(int n = 1, SinhVien* sv = nullptr);
         MangSinhVien(const MangSinhVien &sv);
         //Hàm get - set, hàm trung bình cộng
         int getN();
@@ -66,8 +68,8 @@ class MangSinhVien {
             return sv[i];
         }
         void operator = (MangSinhVien m) {
-            n = m.n;
-            for (size_t i = 0; i < m.n; i++)
+            soluongsinhvien = m.soluongsinhvien;
+            for (size_t i = 0; i < m.soluongsinhvien; i++)
             {
                 this->sv[i] = m.sv[i];
             }   
@@ -75,23 +77,29 @@ class MangSinhVien {
 };
 
 //Bắt đầu xây dựng hàm Diem
-Diem::Diem(int n, float a[]) {
-    this->n = n;
-    for (size_t i = 0; i < n; i++)
-    {
-        this->a[i] = a[i];
+Diem::Diem(int n, float* a) {
+    if (a == nullptr) {
+        this->n = 1;
+        this->a[0] = 1;
+    } else {
+        this->n = n;
+        for (size_t i = 0; i < n; i++) {
+            this->a[i] = a[i];
+        }
     }
+}
+
+Diem::Diem(const Diem &d) {
+    this->n = d.n;
+    for (size_t i = 0; i < d.n; i++)
+    {
+        this->a[i] = d.a[i];
+    }
+    
 }
 
 Diem::~Diem(){}
 
-Diem::Diem(const Diem &sv) {
-    this->n = sv.n;
-    for (size_t i = 0; i < sv.n; i++)
-    {
-        this->a[i] = sv.a[i];
-    }
-}
 
 int Diem::getN() {
     return this->n;
@@ -101,10 +109,18 @@ void Diem::setN(int n) {
     this->n = n;
 }
 
+float Diem::getTBC() {
+    float sum = 0;
+    for (size_t i = 0; i < n; i++)
+    {
+        sum = sum + a[i];
+    }
+    return sum / n;
+}
+
 istream& operator >> (istream &is, Diem &d) {
     d.n = 0;
-    while (is >> d.a[d.n])
-    {
+    while (is >> d.a[d.n]) {
         d.n++;
     }
     return is;
@@ -158,15 +174,6 @@ void SinhVien::setDiem(Diem d) {
     this->d = d;
 }
 
-float Diem::getTBC() {
-    float sum = 0;
-    for (size_t i = 0; i < n; i++)
-    {
-        sum = sum + a[i];
-    }
-    return sum;
-}
-
 istream& operator >> (istream &is, SinhVien &sv) {
     cin.ignore();
     cin.clear();
@@ -182,37 +189,60 @@ ostream& operator << (ostream &os, SinhVien sv) {
     os << "DTB: " << fixed << setprecision(1) << sv.d.getTBC();
     return os;
 }
+
+bool SinhVien::operator < (SinhVien sv) {
+    return sv.d.getTBC() < this->d.getTBC();
+}
+
 //Kết thúc xây dựng hàm của lớp SinhVien
 
 //Bắt đầu xây dựng hàm của lớp MangSinhVien
-MangSinhVien::MangSinhVien(int n, SinhVien sv[]) {
-    this->n = n;
-    for (size_t i = 0; i < n; i++)
-    {
-        this->sv[i] = sv[i];
+MangSinhVien::MangSinhVien(int n, SinhVien* sv) {
+    if (sv == nullptr) {
+        this->soluongsinhvien = 1;
+        this->sv[0] = SinhVien();
+    } else {
+        this->soluongsinhvien = n;
+        for (size_t i = 0; i < n; i++) {
+            this->sv[i] = sv[i];
+        }
     }
 }
 
 MangSinhVien::MangSinhVien(const MangSinhVien &m) {
-    this->n = m.n;
-    for (size_t i = 0; i < m.n; i++)
+    this->soluongsinhvien = m.soluongsinhvien;
+    for (size_t i = 0; i < m.soluongsinhvien; i++)
     {
         this->sv[i] = m.sv[i];
     }
 }
 
 istream& operator >> (istream &is, MangSinhVien &m) {
-    m.n = 0;
-    while (is >> m.sv[m.n])
+    is >> m.soluongsinhvien;
+    for (size_t i = 0; i < m.soluongsinhvien; i++)
     {
-        m.n++;
+        is >> m.sv[i];
     }
     return is;
 }
+
+ostream& operator << (ostream &os, MangSinhVien m) {
+    SinhVien temp = m.sv[0];
+    for (size_t i = 1; i < m.soluongsinhvien; i++)
+    {
+        if (temp < m.sv[i]) {
+            temp = m.sv[i];
+        }
+    }
+    os << temp;
+    return os;
+}
+
 //Kết thúc xây dựng hàm của lớp MangSinhVien
 
 int main() {
     MangSinhVien m;
     cin >> m;
     cout << m;
+
 }
