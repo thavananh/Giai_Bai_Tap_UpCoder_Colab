@@ -191,7 +191,7 @@ ostream& operator << (ostream &os, SinhVien sv) {
 }
 
 bool SinhVien::operator < (SinhVien sv) {
-    return sv.d.getTBC() < this->d.getTBC();
+    return this->d.getTBC() < sv.d.getTBC();
 }
 
 //Kết thúc xây dựng hàm của lớp SinhVien
