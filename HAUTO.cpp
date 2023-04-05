@@ -7,7 +7,7 @@ int main() {
     stack<int>stc;
     char c[1000];
     int temp = 0;
-    while (scanf("%s", c))
+    while (scanf("%s", c) != EOF)
     {
         switch (c[0])
         {
