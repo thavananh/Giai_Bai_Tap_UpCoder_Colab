@@ -18,11 +18,11 @@ int main() {
             stc.push(input[i]);
             break;
         case ')':
-            while (!stc.empty() && stc.top() != '(') {
+            while (stc.top() != '(') {
                 hauto.push(stc.top());
                 stc.pop();
             }
-            if (!stc.empty() && stc.top() == '(') {
+            if (stc.top() == '(') {
                 stc.pop();
             }
             break;
@@ -31,7 +31,7 @@ int main() {
         case '*':
         case '/':
         case '^':
-            while (!stc.empty() && stc.top() != '(') {
+            while (stc.top() != '(') {
                 hauto.push(stc.top());
                 stc.pop();
             }
@@ -42,12 +42,6 @@ int main() {
             break;
         }
     }
-
-    while (!stc.empty()) {
-        hauto.push(stc.top());
-        stc.pop();
-    }
-
     while (!hauto.empty()) {
         cout << hauto.front();
         hauto.pop();
