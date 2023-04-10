@@ -39,6 +39,6 @@ int main() {
         }
     }
     cout << stc.top();
-    stc.pop();
+
 
 }
