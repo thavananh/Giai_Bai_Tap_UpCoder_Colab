@@ -50,7 +50,7 @@ int main() {
         stc.pop();
     }
     while (!q.empty()) {
-        cout << q.front();
+        cout << q.front() << " ";
         q.pop();
     }
 }
