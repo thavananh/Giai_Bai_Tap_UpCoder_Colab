@@ -7,17 +7,21 @@
 using namespace std;
 
 int main() {
-    stack<char>stc;
-    char input[1000000];
+    stack<string>stc;
+    char input;
+    queue<string>q;
     while (scanf("%s", input) != EOF)
     {
         switch (input[0])
         {
-        case '(':
-            
-            
+        case "(":
+            stc.push(input);
             break;
-        
+        case ")":
+            while (!stc.empty() && stc.top() != '(')
+            {
+                q.push(input);
+            }
         default:
             break;
         }
