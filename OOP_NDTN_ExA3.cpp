@@ -47,8 +47,16 @@ istream &operator >> (istream &is, ARRINT1 &ar) {
 }
 
 ostream &operator << (ostream &os, ARRINT1 ar) {
+    cout << ar.len << ": ";
     for (size_t i = 0; i < ar.len; i++)
     {
+        if (i == ar.len - 1 || i == 0)
+        {
+            if (ar.a[i] == 0)
+            {
+                return os;
+            }
+        }
         os << ar.a[i];
     }
     return os;
@@ -65,7 +73,7 @@ ARRINT1 ARRINT1::operator+(ARRINT1 ar2) {
         rs.len = this->len;
         for (size_t i = 0; i < ar2.len; i++)
         {
-            if (this->a[i] + ar2.a[i] > 10)
+            if (this->a[i] + ar2.a[i] >= 10)
             {
                 rs.a[i] = this->a[i] + ar2.a[i] - 10;
             }
@@ -76,12 +84,12 @@ ARRINT1 ARRINT1::operator+(ARRINT1 ar2) {
         }
         rs.a[rs.len - 1] = this->a[rs.len - 1];
     }
-    else
+    else if (this->len < ar2.len)
     {
         rs.len = ar2.len;
         for (size_t i = 0; i < this->len; i++)
         {
-            if (this->a[i] + ar2.a[i] > 10)
+            if (this->a[i] + ar2.a[i] >= 10)
             {
                 rs.a[i] = this->a[i] + ar2.a[i] - 10;
             }
@@ -89,10 +97,26 @@ ARRINT1 ARRINT1::operator+(ARRINT1 ar2) {
             {
                 rs.a[i] = this->a[i] + ar2.a[i];
             }
-            rs.a[rs.len - 1] = ar2.a[rs.len - 1];
             
         }
+        rs.a[rs.len - 1] = ar2.a[rs.len - 1]; 
     }
+    else
+    {
+        rs.len = this->len;
+        for (size_t i = 0; i < this->len; i++)
+        {
+            if (this->a[i] + ar2.a[i] >= 10)
+            {
+                rs.a[i] = this->a[i] + ar2.a[i] - 10;
+            }
+            else
+            {
+                rs.a[i] = this->a[i] + ar2.a[i];
+            }
+        }
+    }
+    
     return rs;
     
     
