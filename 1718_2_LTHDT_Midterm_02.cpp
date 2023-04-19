@@ -82,41 +82,168 @@
 // }
 
 #include <iostream>
+#include <cstring>
+#include <string>
+#include <iomanip>
 using namespace std;
 
-struct PhanSo
-{
-    int n;
-    int tu, mau;
+class Employee {
+    int id;
+    string firstName, lastName;
+    double salary;
     public:
-        PhanSo timMin(PhanSo ps1, PhanSo ps2);
+        Employee(int id = 0, string firstName = "", string lastName = "", double salary = 0);
+        Employee(const Employee &e);
+        int getID();
+        string getFirstName();
+        string getLastName();
+        string getName();
+        double getSalary();
+        void setSalary(double salary);
+        double getAnnualSalary();
+        double raiseSalary(double percent);
+        string toString();
+        friend istream& operator >> (istream &is, Employee &e);
+        friend ostream& operator << (ostream &os, Employee e);
+        Employee& operator++();
+        Employee operator++(int);
+        Employee& operator--();
+        Employee operator--(int);
+        Employee operator + (double);
+        Employee operator - (double);
+        bool operator > (Employee e2);
+        bool operator < (Employee e2);
+        bool operator == (Employee e2);
 };
 
-istream &operator >> (istream &is, PhanSo &ps);
-ostream &operator << (ostream &os, PhanSo p);
-
-int main() {
-
+Employee::Employee(int id, string firstName, string lastName, double salary) {
+    this->id = id;
+    this->firstName = firstName;
+    this->lastName = lastName;
+    this->salary = salary;
 }
 
-istream &operator >> (istream &is, PhanSo &ps) {
-    is >> ps.tu >> ps.mau;
+Employee::Employee(const Employee &e) {
+    this->id = e.id;
+    this->firstName = e.firstName;
+    this->lastName = e.lastName;
+    this->salary = e.salary;
+}
+
+int Employee::getID() {
+    return this->id;
+}
+
+string Employee::getFirstName() {
+    return this->firstName;
+}
+
+string Employee::getLastName() {
+    return this->lastName;
+}
+
+string Employee::getName() {
+    return this->firstName + " " + this->lastName;
+}
+
+double Employee::getSalary() {
+    return this->salary;
+}
+
+void Employee::setSalary(double salary) {
+    this->salary = salary;
+}
+
+double Employee::getAnnualSalary() {
+    return this->salary*12;
+}
+
+double Employee::raiseSalary(double percent) {
+    return this->salary + this->salary*percent/100;
+}
+
+string Employee::toString() {
+    return "";
+}
+
+istream &operator >> (istream &is, Employee &e) {
+    is >> e.id;
+    is.ignore();
+    getline(is, e.firstName);
+    getline(is, e.lastName);
+    is >> e.salary;
     return is;
 }
 
-ostream &operator << (ostream &os, PhanSo ps) {
-    for (size_t i = 0; i < count; i++)
-    {
-        /* code */
-    }
-    
-    os << ps.tu << "/" << ps.mau;
+ostream &operator << (ostream &os, Employee e) {
+    os << "Employee[";
+    os << "id=" << e.id << ',';
+    os << "name=" << e.firstName << " " << e.lastName << ',';
+    os << fixed << setprecision(2) << "salary=$" << e.salary << "]"; 
     return os;
 }
 
+Employee& Employee::operator++() {
+    this->salary = this->salary + this->salary*10/100;
+    return *this;
+}
 
+Employee Employee::operator++(int) {
+    Employee temp = *this;
+    this->salary = this->salary + this->salary*10/100;
+    return temp;
+}
 
-bool operator < (PhanSo ps1, PhanSo ps2) {
-    return (float)ps1.tu / ps1.mau < (float)ps2.tu / ps2.mau;
-    
+Employee& Employee::operator--() {
+    this->salary = this->salary - this->salary*10/100;
+    return *this;
+}
+
+Employee Employee::operator--(int) {
+    Employee temp = *this;
+    this->salary = this->salary - this->salary*10/100;
+    return temp;
+}
+
+Employee Employee::operator+(double themLuong) {
+    this->salary = this->salary + themLuong;
+    return *this;
+}
+
+Employee Employee::operator-(double truLuong) {
+    this->salary = this->salary - truLuong;
+    return *this;
+}
+
+bool Employee::operator < (Employee e2) {
+    return this->salary < e2.salary;
+}
+
+bool Employee::operator > (Employee e2) {
+    return this->salary > e2.salary;
+}
+
+bool Employee::operator == (Employee e2) {
+    return this->salary == e2.salary;
+}
+
+int main() {
+    Employee e1, e2;
+    cin >> e1 >> e2;
+    cout << e1 << '\n';
+    cout << e2 << '\n';
+    if (e1 == e2) {
+        cout << "BANG NHAU" << '\n';
+    }
+    else if (e1 < e2) {
+        cout << "NHO HON" << '\n';
+    } 
+    else {
+        cout << "LON HON" << '\n';
+    }
+    double a, b; cin >> a >> b;
+    --e2;
+    e2 = e2 + b;
+    cout << "$" << (e1++ - a).getSalary() << '\n';
+    cout << "$" << e2.getSalary();
 }
