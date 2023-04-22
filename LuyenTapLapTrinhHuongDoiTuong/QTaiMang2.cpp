@@ -11,7 +11,7 @@ class M1C {
         M1C operator + (M1C m2);
         bool operator == (M1C m2);
         bool operator != (M1C m2);
-        int operator[](int i);
+        int &operator[](int i);
 };
 
 istream& operator >> (istream &is, M1C &m) {
@@ -80,7 +80,7 @@ bool M1C::operator != (M1C m2) {
     return !M1C::operator==(m2);
 }
 
-int M1C::operator[](int i) {
+int &M1C::operator[](int i) {
     return this->a[i];
 }
 
