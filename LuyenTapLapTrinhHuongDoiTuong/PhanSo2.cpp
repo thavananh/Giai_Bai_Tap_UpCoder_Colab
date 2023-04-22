@@ -159,7 +159,7 @@ ostream &operator << (ostream &os, MangPhanSo m) {
     rs = m.p[0]; // lưu phần tử đầu tiên của mảng vào biến kết quả
     for (size_t i = 1; i < m.n; i++)
     {
-        rs = rs + m.p[i]; // p1 + p2
+        rs = rs + m.p[i]; 
     }
     os << rs;
     return os;
