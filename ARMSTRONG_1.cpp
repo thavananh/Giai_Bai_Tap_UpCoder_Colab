@@ -15,6 +15,9 @@ bool amstrong(int n) {
     while (temp)
     {
         sum = sum + pow(temp%10, count);
+        if (sum > n) {
+            return false;
+        }
         temp = temp / 10;
     }
     if (sum == n) {
