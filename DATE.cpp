@@ -14,6 +14,7 @@ struct Date {
         string thuTrongNam();
         Date ngayKeTiep();
         friend bool trungThu(Date d1, Date d2);
+        int tongSoNgay();
 };
 
 istream &operator >> (istream &is, Date &d) {
@@ -28,7 +29,7 @@ ostream &operator << (ostream &os, Date d) {
 
 bool Date::namNhuan() {
     int nam_int = stoi(nam);
-    if ((nam_int % 4 == 0 || nam_int % 400 == 0) && nam_int % 100 != 0)
+    if ((nam_int % 400 == 0) || (nam_int % 100 != 0 && nam_int % 4 == 0))
     {
         return true;
     }
@@ -159,9 +160,14 @@ string Date::thuTrongNam() {
     string rs;
     if (thang_int > 2)
     {
-        n = (ngay_int + 2*thang_int+(3*(thang_int+1)) / 5 + nam_int + (nam_int / 4));
-        n = round(n);
-        n = (int)n%7;
+        n = (ngay_int + 2*thang_int+(3*(thang_int+1)) / 5 + nam_int + (nam_int / 4))%7;
+    }
+    else
+    {
+        thang_int = thang_int + 12;
+        nam_int = nam_int - 1;
+        //n = (ngày+2*tháng+(3*(tháng+1)) / 5 + năm + (năm / 4)) % 7 
+        n = (ngay_int + 2*thang_int+(3*(thang_int+1)) / 5 + nam_int + (nam_int / 4))%7;
     }
     switch ((int)n)
     {
@@ -219,19 +225,26 @@ Date Date::ngayKeTiep() {
 }
 
 bool operator == (Date d1, Date d2) {
-    return d1.ngayTrongNam() == d2.ngayTrongNam();
+    return d1.tongSoNgay() == d2.tongSoNgay();
 }
 
 bool operator < (Date d1, Date d2) {
-    return d1.ngayTrongNam() < d2.ngayTrongNam();
+    return d1.tongSoNgay() < d2.tongSoNgay();
 }
 
 bool trungThu(Date d1, Date d2) {
     return d1.thuTrongNam() == d2.thuTrongNam();
 }
 
+int Date::tongSoNgay() {
+    int nam_int = stoi(nam);
+    int soNgay_NamTruoc = (nam_int - 1)*365 + (nam_int - 1) / 4 - (nam_int - 1) / 100 + (nam_int-1) / 400;
+    int soNgay_HienTai = this->ngayTrongNam();
+    return soNgay_NamTruoc + soNgay_HienTai;
+}
+
 int operator - (Date d1, Date d2) {
-    return abs(d1.ngayTrongNam() - d2.ngayTrongNam());
+    return abs(d1.tongSoNgay() - d2.tongSoNgay());
 }
 
 int main() {
