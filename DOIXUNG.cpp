@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
-#include <cctype>
-#include <algorithm>
 #include <sstream>
+#include <cctype>
 using namespace std;
 
 int main() {
@@ -11,33 +10,33 @@ int main() {
     cin.ignore();
     while (n--)
     {
-        string s1;
-        getline(cin, s1);
+        string s;
+        cin >> s;
+        stringstream ss(s);
         string tmp;
-        string s2;
-        stringstream ss(s1);
-        while (ss >> tmp) {
-            s2.append(tolower(tmp));
-        }
-        cout << s2 << '\n';
-        tmp = s2;
-        int start = 0;
-        int end = s2.length() - 1;
-        while (start <= end)
+        while (ss >> tmp)
         {
-            swap(tmp[start], tmp[end]);
+            for (char &c : tmp)
+            {
+                c = tolower(c);
+            }
+        }
+        string s2 = tmp;
+        int start = 0;
+        int end = s2.size() - 1;
+        while (start < end)
+        {
+            swap(s2[start], s2[end]);
             start++;
             end--;
         }
-        if (tmp == s2)
-        {
+        if (s2 == tmp) {
             cout << 1 << '\n';
-        } 
+        }
         else
         {
             cout << 0 << '\n';
         }
-        
     }
     system("Pause");
 }
