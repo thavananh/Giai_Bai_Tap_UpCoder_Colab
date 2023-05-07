@@ -5,56 +5,62 @@ struct PhanSo
 {
     int tu, mau;
     public:
-        int ucln(PhanSo);
+        friend int ucln(PhanSo ps);
 };
-
 
 template <typename T>
 struct Mang
 {
     int n;
-    T array[100];
-    T &operator[](int i){
-        return array[i];
+    T a[100];
+    T &operator[](int i)
+    {
+        return a[i];
     }
     public:
-        T tinhTong(Mang<T>m);
+        template <typename U>
+        friend U tinhtong(Mang<U>m);
 };
 
-istream& operator >> (istream &input, PhanSo &p) {
-    input >> p.tu >> p.mau;
-    return input;
+istream &operator >> (istream &is, PhanSo &ps) 
+{
+    is >> ps.tu >> ps.mau;
+    return is; 
 }
 
-ostream& operator << (ostream &output, PhanSo p) {
-    output << p.tu << "/" << p.mau;
-    return output;
+ostream &operator << (ostream &os, PhanSo ps) 
+{
+    os << ps.tu << "/" << ps.mau;
+    return os;
 }
 
 template <typename T>
-istream& operator >> (istream &input, Mang <T> &m) { 
+istream &operator >> (istream &is, Mang<T>&m) 
+{
     m.n = 0;
     T x;
-    while (input >> x)
+    while (is >> x)
     {
         m[m.n] = x;
         m.n++;
-    } 
-   return input;
+    }
+    return is;
 }
 
 template <typename T>
-ostream& operator << (ostream &output, Mang<T> m) {
+ostream &operator << (ostream &os, Mang<T>m)
+{
     for (size_t i = 0; i < m.n; i++)
     {
-        output << m.array[i] << '\n';
-    } 
-    return output;
+        os << m.a[i] << '\n';
+    }
+    return os;
 }
 
-int ucln(PhanSo p) {
-    int a = p.tu;
-    int b = p.mau;
+int ucln(PhanSo ps) 
+{
+    int a = ps.tu;
+    int b = ps.mau;
     while (a != 0 && b != 0)
     {
         if (a > b)
@@ -65,7 +71,6 @@ int ucln(PhanSo p) {
         {
             b = b % a;
         }
-        
     }
     if (a > 0)
     {
@@ -74,40 +79,44 @@ int ucln(PhanSo p) {
     return b;
 }
 
-PhanSo operator + (PhanSo p1, PhanSo p2) {
+PhanSo operator + (PhanSo ps1, PhanSo ps2) 
+{
     PhanSo rs;
-    rs.tu = p1.tu * p2.mau + p2.tu * p1.mau;
-    rs.mau = p1.mau * p2.mau;
+    rs.tu = ps1.tu * ps2.mau + ps2.tu * ps1.mau;
+    rs.mau = ps1.mau * ps2.mau;
     int k = ucln(rs);
     rs.tu = rs.tu / k;
     rs.mau = rs.mau / k;
     return rs;
 }
 
-
-template <typename T>
-T tinhTong (Mang<T>m) {
-    T rs = m.array[0];
+template <typename U>
+U tinhtong (Mang<U>m) 
+{
+    U rs = m.a[0];
     for (size_t i = 1; i < m.n; i++)
     {
-        rs = rs + m.array[i];
+        rs = rs + m.a[i];
     }
     return rs;
 }
 
-
 int main() {
-    int c;
+    char c;
     cin >> c;
-    if (c == 'a') {
+    switch (c)
+    {
+    case 'a':
         Mang<int>m;
         cin >> m;
-        cout << tinhTong<int>(m);
+        cout << tinhtong<int>(m);
+        break;
+    case 'b':
+        Mang<PhanSo>m1;
+        cin >> m1;
+        cout << tinhtong<PhanSo>(m1);
+        break;
+    default:
+        break;
     }
-    else {
-        Mang<PhanSo>m;
-        cin >> m;
-        cout << tinhTong<PhanSo>(m);
-    }
-
 }
