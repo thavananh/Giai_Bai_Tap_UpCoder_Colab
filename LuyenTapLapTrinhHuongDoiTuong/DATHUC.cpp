@@ -88,6 +88,6 @@ int main() {
     {
         cout << "FALSE" << '\n';
     }
-    system("Pause");
+    
     
 }
