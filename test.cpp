@@ -1,24 +1,56 @@
 #include <iostream>
 using namespace std;
+
 struct PhanSo {
     int tu, mau;
 };
-PhanSo operator&= (PhanSo a, PhanSo b);
 
-int main() {
-    PhanSo p1, p2, p3;
-    p1.tu = 1;
-    p1.mau = 2;
-    p2.tu = 1;
-    p2.mau = 3;
-    p3 = p1 = p2;
+istream& operator >> (istream &is, PhanSo &p) {
+    is >> p.tu >> p.mau;
 }
 
-PhanSo operator&= (PhanSo a, PhanSo b) {
-    PhanSo rs;
-    if (a.tu == b.tu && a.mau == b.mau)
+ostream& operator << (ostream &os, PhanSo p) {
+    os << p.tu << "/" << p.mau;
+}
+
+template <typename T>
+T timMax(T a, T b, T c) {
+    T _max;
+    _max = a;
+    if (_max < b)
     {
-        rs = 1;
+        _max = b;
     }
-    return rs;
+    if (_max < c) 
+    {
+        _max = c;
+    }
+    return _max;
+}
+
+template <typename T>
+void nhap() {
+    T x, y, z;
+    cin >> x >> y >> z;
+    cout << timMax<T>(x, y, z);
+}
+
+int main() {
+    char c;
+    cin >> c;
+    switch (c)
+    {
+    case 'a':
+        nhap<int>();
+        break;
+    case 'b':
+        nhap<double>();
+        break;
+    case 'c':
+        nhap<PhanSo>();
+        break;
+    default:
+        break;
+    }
+    return 0;
 }

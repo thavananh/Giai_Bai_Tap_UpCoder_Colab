@@ -5,15 +5,41 @@ struct PhanSo {
     int tu, mau;
 };
 
-istream& operator >> (istream &input, PhanSo &p);
-ostream& operator << (ostream &output, PhanSo p);
-bool operator > (PhanSo a, PhanSo b);
+istream& operator >> (istream &is, PhanSo &p) {
+    is >> p.tu >> p.mau;
+    return is;
+}
+
+ostream& operator << (ostream &os, PhanSo p) {
+    os << p.tu << "/" << p.mau;
+    return os;
+}
+
+bool operator < (PhanSo ps1, PhanSo ps2) {
+    return ps1.tu / ps1.mau < ps2.tu / ps2.mau;
+}
 
 template <typename T>
-void nhap();
+T timMax(T a, T b, T c) {
+    T _max;
+    _max = a;
+    if (_max < b)
+    {
+        _max = b;
+    }
+    if (_max < c) 
+    {
+        _max = c;
+    }
+    return _max;
+}
 
 template <typename T>
-T timmax(T a, T b, T C);
+void nhap() {
+    T x, y, z;
+    cin >> x >> y >> z;
+    cout << timMax<T>(x, y, z);
+}
 
 int main() {
     char c;
@@ -22,55 +48,15 @@ int main() {
     {
     case 'a':
         nhap<int>();
-        
         break;
     case 'b':
-        nhap<float>();
-        
+        nhap<double>();
         break;
     case 'c':
         nhap<PhanSo>();
-        
         break;
     default:
         break;
     }
-
+    return 0;
 }
-
-template <typename T>
-void nhap() {
-    T x, y, z;
-    cin >> x >> y >> z;
-    cout << timmax<T>(x, y, z);
-}
-
-template <typename T>
-T timmax(T a, T b, T c) {
-    T k = a;
-    if (b > k)
-    {
-        k = b;
-    }
-    if (c > k)
-    {
-        k = c;
-    }
-    return k;
-    
-}
-
-istream& operator >> (istream &input, PhanSo &p) {
-    input >> p.tu >> p.mau;
-    return input;
-}
-
-ostream& operator << (ostream &output, PhanSo p) {
-    output << p.tu << p.mau;
-    return output;
-}
-
-bool operator > (PhanSo a, PhanSo b) {
-    return (float)a.tu / a.mau > (float)b.tu / b.mau;
-}
-
