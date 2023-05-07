@@ -41,7 +41,7 @@ istream &operator >> (istream &is, Mang<T>&m)
     T x;
     while (is >> x)
     {
-        m[m.n] = x;
+        m.a[m.n] = x;
         m.n++;
     }
     return is;
