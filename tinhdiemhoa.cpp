@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 struct diemTrungBinhHoa
@@ -10,7 +11,7 @@ struct diemTrungBinhHoa
 
 istream &operator >> (istream &is, diemTrungBinhHoa &d)
 {
-    getline(is, d.s);
+    is >> d.s;
     is >> d.a >> d.b;
     is.ignore();
     return is;
@@ -18,13 +19,17 @@ istream &operator >> (istream &is, diemTrungBinhHoa &d)
 
 ostream &operator << (ostream &os, diemTrungBinhHoa d)
 {
-    os << d.s << " " << (double)(d.a + d.b)/2;
+    os << d.s << " ";
+    if (d.a > 0 && d.b > 0) {
+        os << fixed << setprecision(1) << (double)(d.a + d.b) / 2;
+    }
+    os << endl;
     return os;
 }
 
-bool operator > (diemTrungBinhHoa d1, diemTrungBinhHoa d2)
+bool operator < (diemTrungBinhHoa d1, diemTrungBinhHoa d2)
 {
-    return double(d1.a + d1.b)/ 2 > (d2.a + d2.b) / 2;
+    return double(d1.a + d1.b)/2 < double(d2.a + d2.b)/2;
 }
 
 int main ()
@@ -38,15 +43,15 @@ int main ()
     {
         cin >> d[i];
     }
-    for (size_t i = 0; i < n; i++)
-    {
-        cout << d[i] << '\n';
-    }
+    // for (size_t i = 0; i < n; i++)
+    // {
+    //     cout << d[i] << '\n';
+    // }
     for (size_t i = 0; i < n - 1; i++)
     {
         for (size_t j = i + 1; j < n; j++)
         {
-            if (d[i] > d[j])
+            if (d[i] < d[j])
             {
                 temp = d[i];
                 d[i] = d[j];
@@ -59,4 +64,5 @@ int main ()
     {
         cout << i+1 << " " << d[i] << '\n';
     }
+    system("Pause");
 }

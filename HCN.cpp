@@ -39,5 +39,4 @@ int main() {
     {
         cout << "false" << '\n';
     }
-    system("Pause");
 }
