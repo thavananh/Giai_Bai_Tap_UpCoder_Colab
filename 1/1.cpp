@@ -1,52 +1,74 @@
 #include <iostream>
-#include <string>
 
 using namespace std;
 
-struct SinhVien {
-    string Hoten;
-    float diem1, diem2, diem3;
-};
-float tinhDiemTrungBinh(SinhVien sv) 
-{
-    return (sv.diem1 + sv.diem2 + sv.diem3) / 3;
-}
-bool operator<(SinhVien sv1, SinhVien sv2) 
-{
-    return (tinhDiemTrungBinh(sv1) < tinhDiemTrungBinh(sv2));
-}
-istream& operator>>(istream& is, SinhVien& sv) 
-{
-    
-   
-    getline(is, sv.Hoten);
-    
-    is >> sv.diem1>>sv.diem2>> sv.diem3;
-    is.ignore();
-    return is;
-}
-ostream& operator<<(ostream& os, SinhVien sv) 
-{
-    os << sv.Hoten;
-    return os;
-}
-int main() {
-SinhVien sv[1000];
-    int n = 0;
-    while (cin >> sv[n])
-    {
-        n++;
-    }
-SinhVien svMaxDiemTB = sv[0];
-    for (int i = 1; i <= n; i++) 
-    {
-        if (svMaxDiemTB < sv[i]) 
-        {
-            svMaxDiemTB = sv[i];
+char a[100][100];
+
+bool check[100][100];
+
+int xc,yc ;
+int xb,yb;
+
+int n,m;
+
+int dx[]={-1,1,0,0};
+int dy[]={0,0,1,-1};
+
+int number_of_cells_to_pass_through=0;
+int imin;
+
+void _try(int x , int y);
+
+
+int main(){
+    cin>>n>>m;
+    for(int i=0;i<n;++i){
+        for(int j=0;j<m;j++){
+            
+            cin>>a[i][j];
+            
+            if(a[i][j]=='C') {
+                xc = i ;
+                yc = j ;
+            }
+            
+            if(a[i][j]=='B') {
+                xb = i ;
+                yb = j ;
+            }
         }
     }
-cout << svMaxDiemTB ;
-
     
-    return 0;
+    number_of_cells_to_pass_through=1;
+    check[xc][yc]=true;
+    imin=n*m;
+    
+    _try(xc,yc);
+    cout<<imin-1;
+}
+void _try(int x, int y){
+    if(x==xb && y==yb){
+        if(number_of_cells_to_pass_through<imin)  
+        imin=number_of_cells_to_pass_through;
+        
+    }
+    else{
+        for(int i=0;i<4;++i){
+            int newx=x + dx[i];
+            int newy=y + dy[i];
+            if(newx>=0 && newx<n &&newy>=0 && newy<m 
+                 && check [newx][newy]==false && a[newx][newy]!='*'){
+                    check[newx][newy] =true;
+                 ++number_of_cells_to_pass_through;
+                
+                 _try(newx,newy);
+                
+                 
+                 --number_of_cells_to_pass_through;
+                 check[newx][newy] =false;
+                
+            }
+        }
+    }
+    
 }
