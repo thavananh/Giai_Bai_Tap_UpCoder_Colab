@@ -4,7 +4,7 @@ using namespace std;
 
 long long timMaxTrongSoN(long long n, long long rs = INT_MIN)
 {
-    if (n == 0)
+    if (n == 0 || rs == 9)
     {
         return rs;
     }
