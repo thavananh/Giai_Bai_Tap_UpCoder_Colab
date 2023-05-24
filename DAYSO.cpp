@@ -25,7 +25,7 @@ int main()
     long long n;
     cin >> n;
     long long __max = INT_MIN;
-    for (long long i = 0; i < n; i++)
+    for (long long i = 0; i <= n; i++)
     {
         if (__max < deQuy(i))
         {
