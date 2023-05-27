@@ -23,8 +23,8 @@ void dfs(vector<vector<int>>m_adj, int s, vector<bool>&flag)
 int main()
 {
     vector<vector<int>>m_adj(5);
-    addEgde(m_adj, 0, 3);
     addEgde(m_adj, 0, 1);
+    addEgde(m_adj, 0, 3);
     addEgde(m_adj, 1, 2);
     addEgde(m_adj, 3, 2);
     addEgde(m_adj, 3, 4);
