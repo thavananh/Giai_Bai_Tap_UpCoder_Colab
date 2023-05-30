@@ -15,7 +15,7 @@ int BFS(vector<vector<int>>m_adj, int s, int canh, int t)
     vector<bool>visited(canh, false);
     vector<int>sum(canh, 0);
     q.push(s-1);
-    visited[s] = true;
+    visited[s-1] = true;
     while (!q.empty())
     {
         int v = q.front();
@@ -41,6 +41,7 @@ int BFS(vector<vector<int>>m_adj, int s, int canh, int t)
 int main()
 {
     int dinh, canh, s, t;
+    
     cin >> dinh >> canh >> s >> t;
     vector<vector<int>>m_adj(10000);
     for (size_t i = 0; i < canh; i++)
