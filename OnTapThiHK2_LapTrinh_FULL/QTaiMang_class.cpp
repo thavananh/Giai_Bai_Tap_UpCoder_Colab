@@ -1,36 +1,55 @@
 #include <iostream>
 using namespace std;
 
-struct M1C 
+class Mang
 {
     int n;
     int a[1000];
     public:
-        void operator = (const M1C &m)
-        {
-            this->n = m.n;
-            for (size_t i = 0; i < m.n; i++)
-            {
-                this->a[i] = m.a[i];
-            }
-        }
-        int &operator[](int i)
-        {
-            return this->a[i];
-        }
+        Mang(int n = 0, int a[] = {});
+        ~Mang();
+        int getN();
+        void setN(int n);
+        friend istream &operator >> (istream &is, Mang &m);
+        friend ostream &operator << (ostream &os, Mang m);
+        friend Mang operator + (Mang m1, Mang m2);
+        friend bool operator == (Mang m1, Mang m2);
+        friend bool operator != (Mang m1, Mang m2);
 };
 
-istream &operator >> (istream &is, M1C &m)
+Mang::Mang(int n, int a[])
+{
+    this->n = n;
+    for (size_t i = 0; i < n; i++)
+    {
+        this->a[i] = a[i];
+    }
+}
+
+Mang::~Mang()
+{}
+
+int Mang::getN()
+{
+    return this->n;
+}
+
+void Mang::setN(int n)
+{
+    this->n = n;
+}
+
+istream &operator >> (istream &is, Mang &m)
 {
     is >> m.n;
     for (size_t i = 0; i < m.n; i++)
     {
-        cin >> m.a[i];
+        is >> m.a[i];
     }
     return is;
 }
 
-ostream &operator << (ostream &os, M1C m)
+ostream &operator << (ostream &os, Mang m)
 {
     for (size_t i = 0; i < m.n; i++)
     {
@@ -39,9 +58,9 @@ ostream &operator << (ostream &os, M1C m)
     return os;
 }
 
-M1C operator + (M1C m1, M1C m2)
+Mang operator + (Mang m1, Mang m2)
 {
-    M1C rs;
+    Mang rs;
     if (m1.n > m2.n)
     {
         rs.n = m1.n;
@@ -69,7 +88,7 @@ M1C operator + (M1C m1, M1C m2)
     return rs;
 }
 
-bool operator == (M1C m1, M1C m2)
+bool operator == (Mang m1, Mang m2)
 {
     if (m1.n == m2.n)
     {
@@ -85,14 +104,14 @@ bool operator == (M1C m1, M1C m2)
     return false;
 }
 
-bool operator != (M1C m1, M1C m2)
+bool operator != (Mang m1, Mang m2)
 {
     return !(m1 == m2);
 }
 
 int main()
 {
-    M1C m1, m2;
+    Mang m1, m2;
     cin >> m1 >> m2;
     if (m1 == m2)
     {
