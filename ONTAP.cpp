@@ -193,7 +193,11 @@ Mang<T> operator + (Mang<T>m1, Mang<T>m2)
         {
             rs.a[i] = m1.a[i] + m2.a[i];
         }
-        rs.a[m1.n - 1] = m1.a[m1.n - 1];
+        for (size_t i = m2.n; i < m1.n; i++)
+        {
+            rs.a[i] = m1.a[i];
+        }
+        
     }
     else
     {
@@ -202,7 +206,10 @@ Mang<T> operator + (Mang<T>m1, Mang<T>m2)
         {
             rs.a[i] = m1.a[i] + m2.a[i];
         }
-        rs.a[m2.n - 1] = m2.a[m2.n-  1];
+        for (size_t i = m1.n; i < m2.n; i++)
+        {
+            rs.a[i] = m2.a[i];
+        }
     }
     return rs;
 }
@@ -220,7 +227,7 @@ int main()
         cin >> m2;
         cout << m1 << '\n';
         cout << "MAX 1 = " << phanTuMax<int>(m1) << '\n';
-        cout << "SUM 2 = " << tongPhanTu<int>(m1) << '\n';
+        cout << "SUM 1 = " << tongPhanTu<int>(m1) << '\n';
         Mang<int>m1_le;
         Mang<int>m1_chan;
         
@@ -282,5 +289,6 @@ int main()
     default:
         break;
     }
-    system("Pause");
 }
+
+
