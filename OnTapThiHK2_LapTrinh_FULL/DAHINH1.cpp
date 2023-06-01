@@ -77,31 +77,27 @@ class HV : public HCN
 
 int main()
 {
-    // char c;
-    // int n = 0;
-    // HinhHoc *p[100];
-    // while (cin >> c)
-    // {
-    //     if (c == 'a')
-    //     {
-    //         HV hv;
-    //         cin >> hv;
-    //         p[n] = &hv;
-    //         n++;
-    //     }
-    //     else
-    //     {
-    //         HCN hcn;
-    //         cin >> hcn;
-    //         p[n] = &hcn;
-    //         n++;
-    //     }
-    // }
-    // for (size_t i = 0; i < n; i++)
-    // {
-    //     cout << p[i]->getCV() << '\n';
-    // }
-    HV hv;
-    cin >> hv;
-    cout << hv.getCV();
+    char c;
+    int n = 0;
+    HinhHoc *p[100];
+    while (cin >> c)
+    {
+        if (c == 'a')
+        {
+            int canh; cin >> canh;
+            p[n] = new HV(canh);
+            n++;
+        }
+        else
+        {
+            int dai, rong;
+            cin >> dai >> rong;
+            p[n] = new HCN(dai, rong);
+            n++;
+        }
+    }
+    for (size_t i = 0; i < n; i++)
+    {
+        cout << p[i]->getCV() << '\n';
+    }
 }
