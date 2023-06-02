@@ -1,13 +1,6 @@
 #include <iostream>
 #include <string>
 using namespace std;
-
-// class Internet
-// {
-// public:
-//     virtual int donGia() = 0;
-// };
-
 class Khach
 {
     string tenKhachHang;
@@ -122,6 +115,10 @@ class VIP : public Khach
         {
             this->donGiaVip = v.donGiaVip;
         }
+        ~VIP()
+        {
+
+        }
         string getLoai()
         {
             return "VIP";
@@ -196,7 +193,6 @@ int main()
     Khach *p[100];
     int n, donGia, donGiaVip, donGiaDownload;
     cin >> n >> donGia >> donGiaVip >> donGiaDownload;
-    string choice;
     for (size_t i = 0; i < n; i++)
     {
         string s;
