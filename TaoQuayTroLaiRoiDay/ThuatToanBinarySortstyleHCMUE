@@ -15,10 +15,6 @@ public:
     {
         return x1._a == x2._a; 
     }
-    friend bool operator >= (Key x1, Key x2)
-    {
-        return x1._a >= x2._a;
-    }
 };
 
 class Record
@@ -35,11 +31,6 @@ public:
     {
         is >> record._a;
         return is;
-    }
-    friend ostream& operator << (ostream& os, Record record)
-    {
-        os << record._a << " ";
-        return os;
     }
 };
 
@@ -70,64 +61,13 @@ public:
         
     }
 
-    void replaceVec(int pos, T data)
-    {
-        auto it = v.begin() + pos;
-        
-        v.insert(it, data);   
-        n = v.size();
-    }
-
     void retrieve(int pos, T &data)
     {
         data = v[pos];
     }
-
     int size()
     {
        return this->n; 
-    }
-
-    void output()
-    {
-        for (size_t i = 0; i < n; i++)
-        {
-            cout << v[i];
-        }
-        
-    }
-};
-
-template <class T>
-class Ordered_list : public List<T>
-{
-public:
-    Ordered_list(int n = 0) : List<T>(n, Record()) {}
-    Ordered_list(int n, T value) : List<T>(n, Record(value)) {}
-    string insert(Record data) // sort;
-    {
-        int s = Ordered_list::size();
-        int pos;
-        for (pos = 0; pos < s; pos++)
-        {
-            Record list_data;
-            Ordered_list::retrieve(pos, list_data);
-            Key temp = static_cast<Key>(data);
-            if (list_data >= temp)
-            {
-                break;
-            }
-        }
-        return replace(pos, data);
-    }
-    string replace(int position, Record data)
-    {
-        if (position > Ordered_list::size() - 1)
-        {
-            return "Insert failed";
-        }
-        Ordered_list::replaceVec(position, data);
-        return "Insert success";              
     }
 };
 
@@ -148,9 +88,10 @@ string sequential_search(List<Record>list, Key target, int &pos)
 
 int main()
 {
-    Ordered_list<Record>list_coThuTu;
-    list_coThuTu.input();
-    list_coThuTu.insert(Record(2));
-    list_coThuTu.output();
+    List<Record>list;
+    list.input();
+    Key key(5);
+    int pos = 0;
+    cout << sequential_search(list, key, pos);
     system("pause");
 }
