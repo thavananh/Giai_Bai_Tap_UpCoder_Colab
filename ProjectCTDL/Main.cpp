@@ -344,9 +344,9 @@ public:
         }
         ofstream writeAccountHistoryFile;
         writeAccountHistoryFile.open("LichSu" + strID + ".txt", ios::app);
-        if (writeAccountFile.is_open())
+        if (writeAccountHistoryFile.is_open())
         {
-            writeAccountFile << "Account remove successfully " << getTime() << '\n';    
+            writeAccountHistoryFile << "Account removed successfully " << getTime() << '\n';    
         }
            
     }
@@ -359,7 +359,7 @@ int main()
     Admin ad;
     //ad.layThongTin();
     //ad.dangNhap();
-    ad.themTaiKhoan();
-    //ad.xoaThe();
+    //ad.themTaiKhoan();
+    ad.xoaThe();
     system("pause");
 }
