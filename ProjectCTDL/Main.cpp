@@ -32,7 +32,110 @@ public:
     virtual void dangNhap() = 0;
 };
 
-class Admin : Person
+
+class User : public Person
+{
+private:
+    string _firstName, _lastName;
+    double _balance;
+    string _moneyType;
+public:
+    User(string strID = "", string strMaPin = "", string firstName = "No", string lastName = "Name", double balance = 0.0, string moneyType = "VND") : Person(strID, strMaPin)
+    {
+        this->_firstName = firstName;
+        this->_lastName = lastName;
+        this->_balance = balance;
+        this->_moneyType = moneyType;
+    }
+    void layThongTin()
+    {
+        string strID, strMaPin;
+        cin >> strID >> strMaPin;
+        User::setAll(strID, strMaPin);
+    }
+
+    string getFirstName()
+    {
+        return this->_firstName;
+    }
+
+    string getLastName()
+    {
+        return this->_lastName;
+    }
+
+    double getBalance()
+    {
+        return this->_balance;
+    }
+
+    string getMoneyType()
+    {
+        return this->_moneyType;
+    }
+
+    int kiemTraSoLuongUser()
+    {
+        int iSoLuongUser = 0;
+        ifstream File;
+        File.open("Admin.txt", ios::in);
+        if (File.is_open())
+        {
+            string line;
+            while (getline(File, line))
+            {
+                iSoLuongUser++;
+            }
+
+        }
+        return iSoLuongUser;
+    }
+
+    void dangNhap() override
+    {
+
+        if (kiemTraSoLuongUser() < 10)
+        {
+            cout << "So luong the tu khong du" << '\n';
+        }
+        else
+        {
+            ifstream File;
+            File.open("TheTu.txt", ios::in);
+            bool thanhCong = false;
+            if (File.is_open())
+            {
+                string line;
+                while (getline(File, line))
+                {
+                    stringstream ss(line);
+                    string ID;
+                    string Pin;
+                    ss >> ID;
+                    ss >> Pin;
+                    if (ID == User::getID() && ID.size() >= 14 && Pin == User::getMaPin() && Pin.size() == 6)
+                    {
+                        thanhCong = true;
+                    }
+                }
+            }
+            else
+            {
+                cout << "NGU";
+            }
+            if (thanhCong)
+            {
+                cout << "dang nhap thanh cong";
+            }
+            else
+            {
+                cout << "dang nhap that bai";
+            }
+        }
+    }
+};
+
+class Admin : public Person
 {
 public:
     Admin(string strID = "", string strMaPin = "") : Person(strID, strMaPin)
@@ -102,15 +205,63 @@ public:
             }
         }
     }
+
+    bool kiemTraTrungLapTaiKhoan(string strID)
+    {
+        ifstream File;
+        File.open("TheTu.txt", ios::in);
+        if (File.is_open())
+        {
+            string line;
+            string id;
+            while (getline(File, line))
+            {
+                stringstream ss(line);
+                ss >> id;
+                if (strID == id)
+                {
+                    return true;
+                }      
+            }
+            File.close();
+        }
+        return false;
+    }
+
     void themTaiKhoan() {
         ofstream File;
         File.open("TheTu.txt", ios::app);
-        string strID;
-        string strPin;
-        cin >> strID;
-        cin.ignore();
-        cin >> strPin;
-        File << strID << " " << strPin << endl;
+        User usr;
+        if (File.is_open())
+        {    
+            string strID;
+            cout << "Input account to add: ";
+            cin >> strID;
+            if (kiemTraTrungLapTaiKhoan(strID))
+            {
+                return;
+            }
+            usr.setAll(strID, "123456");
+            cin.ignore();
+            File << usr.getID() << " " << usr.getMaPin() << endl;
+            File.close();
+        }
+        else
+        {
+            cout << "Something wrong while opening file";
+        }
+        ofstream FileID;
+        FileID.open(usr.getID() + ".txt", ios::out);
+        if (FileID.is_open())
+        {
+            FileID << usr.getID() << '\n';
+            FileID << usr.getFirstName() + " " + usr.getLastName() << '\n';
+            FileID << usr.getBalance() << '\n';
+            FileID << usr.getMoneyType() << '\n';
+        }
+                
+        
+
     }
     void danhSachTaiKhoan() {
         ifstream File;
@@ -123,79 +274,7 @@ public:
     }
 };
 
-class User : Person
-{
-    User(string strID = "", string strMaPin = 0) : Person(strID, strMaPin)
-    {
 
-    }
-    void layThongTin()
-    {
-        string strID, strMaPin;
-        cin >> strID >> strMaPin;
-        User::setAll(strID, strMaPin);
-    }
-
-    int kiemTraSoLuongUser()
-    {
-        int iSoLuongUser = 0;
-        ifstream File;
-        File.open("Admin.txt", ios::in);
-        if (File.is_open())
-        {
-            string line;
-            while (getline(File, line))
-            {
-                iSoLuongUser++;
-            }
-
-        }
-        return iSoLuongUser;
-    }
-
-    void dangNhap() override
-    {
-
-        if (kiemTraSoLuongUser() < 10)
-        {
-            cout << "So luong the tu khong du" << '\n';
-        }
-        else
-        {
-            ifstream File;
-            File.open("TheTu.txt", ios::in);
-            bool thanhCong = false;
-            if (File.is_open())
-            {
-                string line;
-                while (getline(File, line))
-                {
-                    stringstream ss(line);
-                    string ID;
-                    string Pin;
-                    ss >> ID;
-                    ss >> Pin;
-                    if (ID == User::getID() && ID.size() >= 14 && Pin == User::getMaPin() && Pin.size() == 6)
-                    {
-                        thanhCong = true;
-                    }
-                }
-            }
-            else
-            {
-                cout << "NGU";
-            }
-            if (thanhCong)
-            {
-                cout << "dang nhap thanh cong";
-            }
-            else
-            {
-                cout << "dang nhap that bai";
-            }
-        }
-    }
-};
 
 int main()
 {
@@ -203,5 +282,4 @@ int main()
     //ad.layThongTin();
    // ad.dangNhap();
     ad.themTaiKhoan();
-    ad.danhSachTaiKhoan();
 }
