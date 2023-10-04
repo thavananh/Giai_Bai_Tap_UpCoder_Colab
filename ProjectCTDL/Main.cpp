@@ -239,6 +239,7 @@ public:
             cin >> strID;
             if (kiemTraTrungLapTaiKhoan(strID))
             {
+                cout << "Error, found duplicate";
                 return;
             }
             usr.setAll(strID, "123456");
@@ -282,4 +283,5 @@ int main()
     //ad.layThongTin();
    // ad.dangNhap();
     ad.themTaiKhoan();
+    system("pause");
 }
