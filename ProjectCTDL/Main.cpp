@@ -4,7 +4,19 @@
 #include <fstream>
 #include <sstream>
 #include <queue>
+#include <iomanip>
+#include <ctime>
 using namespace std;
+
+string getTime()
+{
+    time_t currentTime = time(nullptr);
+    tm* localTime = localtime(&currentTime);
+    stringstream ss;
+    ss << put_time(localTime, "%Y-%m-%d %H:%M:%S");
+    string timeString = ss.str();
+    return timeString;
+}
 
 class Person
 {
@@ -121,7 +133,7 @@ public:
             }
             else
             {
-                cout << "NGU";
+                cout << "Error while opening file";
             }
             if (thanhCong)
             {
@@ -193,19 +205,18 @@ public:
             }
             else
             {
-                cout << "NGU";
+                cout << "error while opening file";
             }
             if (thanhCong)
             {
-                cout << "dang nhap thanh cong";
+                cout << "login successfully";
             }
             else
             {
-                cout << "dang nhap that bai";
+                cout << "login failed";
             }
         }
     }
-
     bool kiemTraTrungLapTaiKhoan(string strID)
     {
         ifstream File;
@@ -259,19 +270,85 @@ public:
             FileID << usr.getFirstName() + " " + usr.getLastName() << '\n';
             FileID << usr.getBalance() << '\n';
             FileID << usr.getMoneyType() << '\n';
+            FileID.close();
         }
-                
-        
-
+        ofstream historyFile;
+        historyFile.open("LichSu" + usr.getID() + ".txt", ios::out);
+        if (historyFile.is_open())
+        {
+            
+            historyFile << "init account " << getTime() << '\n';
+            historyFile.close();
+        }
     }
-    void danhSachTaiKhoan() {
+
+    void danhSachTaiKhoan() 
+    {
         ifstream File;
         File.open("TheTu.txt");
         string strUser;
-        cout << "Danh sach tai khoan: " << endl;
+        cout << "List of accounts: " << endl;
         while (getline(File, strUser)) {
             cout << strUser << endl;
         }
+    }
+    void xoaThe()
+    {
+        string strID;
+        cout << "Input an account to remove: ";
+        cin >> strID;
+        if (remove((strID + ".txt").c_str()) == 0)
+        {
+            cout << "remove successfully";
+        }
+        else
+        {
+            cout << "Error while removing account";
+            return;
+        }
+        ifstream readAccountFile;
+        readAccountFile.open("TheTu.txt", ios::in);
+        vector<string>v;
+        if (readAccountFile.is_open())
+        {
+            string line;
+            while (getline(readAccountFile, line))
+            {
+                stringstream ss(line);
+                string tmp;
+                ss >> tmp;
+                if (tmp == strID)
+                {
+                    continue;                 
+                }
+                else
+                {
+                    v.push_back(line);
+                }
+                
+            }    
+        }
+        ofstream writeAccountFile;
+        writeAccountFile.open("TheTu.txt", ios::out);
+        if (writeAccountFile.is_open())
+        {
+            for (auto it : v)
+            {
+                writeAccountFile << it << '\n';
+            }
+            writeAccountFile.close();
+        }
+        else
+        {
+            cout << "Error while opening file";
+        }
+        ofstream writeAccountHistoryFile;
+        writeAccountHistoryFile.open("LichSu" + strID + ".txt", ios::app);
+        if (writeAccountFile.is_open())
+        {
+            writeAccountFile << "Account remove successfully " << getTime() << '\n';    
+        }
+           
     }
 };
 
@@ -283,5 +360,6 @@ int main()
     //ad.layThongTin();
     //ad.dangNhap();
     ad.themTaiKhoan();
+    //ad.xoaThe();
     system("pause");
 }
