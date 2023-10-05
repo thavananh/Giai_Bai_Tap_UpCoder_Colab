@@ -152,6 +152,205 @@ public:
             }
         }
     }
+    void xemThongTinTaiKhoan() {
+        ifstream iFile;
+        string strArray[4];
+        string strID;
+        strID = getID() + ".txt";
+        iFile.open(strID);
+        for (int i = 0; i < 4; i++)
+            getline(iFile, strArray[i]);
+        cout << "Thong tin tai khoan cua ban: " << endl;
+        cout << "ID: " << strArray[0] << endl;
+        cout << "Ten tai khoan: " << strArray[1] << endl;
+        cout << "So du tai khoan: " << strArray[2] << endl;
+        cout << "Loai tien te: " << strArray[3] << endl;
+    }
+    void rutTien() {
+        long iTienRut;
+    Again1:
+        cout << "Neu ban muon thoat bam phim 0" << endl;
+        cout << "So tien can rut cua ban la: ";
+        cin >> iTienRut;
+        cin.ignore();
+        if (iTienRut == 0)
+            return;
+        if (iTienRut < 50000) {
+            system("cls");
+            cout << "Ban can phai rut tu 50000 tro len. Vui long nhap lai: " << endl;
+            goto Again1;
+        }
+        long iSoDu;
+        ifstream iFile;
+        string strID;
+        string strArray[4];
+        strID = getID() + ".txt";
+        iFile.open(strID);
+        for (int i = 0; i < 4; i++) {
+            if (i == 2) {
+                iFile >> iSoDu;
+                iFile.ignore();
+            }
+            else
+                getline(iFile, strArray[i]);
+        }
+        if (iTienRut > iSoDu) {
+            system("cls");
+            cout << "So du cua ban khong du. Vui long nhap lai: " << endl;
+            goto Again1;
+        }
+        cout << "Ban co chac muon rut khong (co/khong): ";
+        string iSelection;
+        getline(cin, iSelection);
+        if (iSelection == "co")
+            iSoDu -= iTienRut;
+        else if (iSelection == "khong")
+            return;
+        cout << "Ban da rut tien thanh cong: " << endl;
+        ofstream oFile;
+        oFile.open(strID);
+        for (int i = 0; i < 4; i++)
+            if (i == 2)
+                oFile << iSoDu << endl;
+            else
+                oFile << strArray[i] << endl;
+        ofstream oFile1;
+        oFile1.open("LichSu" + getID() + ".txt", ios::app);
+        time_t now = time(0);
+        char* ch = ctime(&now);
+        oFile1 << now << " Ban da rut " << iTienRut << "VND" << endl;
+    }
+    void chuyenTien() {
+        string strTaiKhoan;
+        long iTienChuyen;
+    Again1:
+        cout << "Tai khoan nhan tien: ";
+        cin >> strTaiKhoan;
+        cout << "So tien se chuyen: ";
+        cin >> iTienChuyen;
+        cin.ignore();
+        if (iTienChuyen < 50000) {
+            system("cls");
+            cout << "Ban can phai chuyen tu 50000 tro len. Vui long nhap lai: " << endl;
+            goto Again1;
+        }
+        long iSoDu;
+        ifstream iFile;
+        string strID;
+        string strArray[4];
+        strID = getID() + ".txt";
+        iFile.open(strID);
+        for (int i = 0; i < 4; i++) {
+            if (i == 2) {
+                iFile >> iSoDu;
+                iFile.ignore();
+            }
+            else
+                getline(iFile, strArray[i]);
+        }
+        if (iTienChuyen > iSoDu) {
+            system("cls");
+            cout << "So du cua ban khong du. Vui long nhap lai: " << endl;
+            goto Again1;
+        }
+        cout << "Ban co chac muon chuyen khong (co/khong): ";
+        string iSelection;
+        getline(cin, iSelection);
+        if (iSelection == "co")
+            iSoDu -= iTienChuyen;
+        else if (iSelection == "khong")
+            return;
+        cout << "Ban da chuyen tien thanh cong: " << endl;
+        ofstream oFile;
+        oFile.open(strID);
+        for (int i = 0; i < 4; i++)
+            if (i == 2)
+                oFile << iSoDu << endl;
+            else
+                oFile << strArray[i] << endl;
+        ofstream oFile1;
+        oFile1.open("LichSu" + getID() + ".txt", ios::app);
+        time_t now = time(0);
+        char* ch = ctime(&now);
+        oFile1 << now << " Ban da chuyen " << iTienChuyen << "VND cho so tai khoan " << strTaiKhoan << endl;
+        ifstream iFile1;
+        iFile1.open(strTaiKhoan + ".txt");
+        string strArray1[4];
+        long iSoDu1;
+        for (int i = 0; i < 4; i++) {
+            if (i == 2) {
+                iFile1 >> iSoDu1;
+                iFile1.ignore();
+            }
+            else
+                getline(iFile1, strArray1[i]);
+        }
+        iSoDu1 += iTienChuyen;
+        ofstream oFile2;
+        oFile2.open(strTaiKhoan + ".txt");
+        for (int i = 0; i < 4; i++)
+            if (i == 2)
+                oFile2 << iSoDu1 << endl;
+            else
+                oFile2 << strArray1[i] << endl;
+        ofstream oFile3;
+        oFile3.open("LichSu" + strTaiKhoan + ".txt", ios::app);
+        oFile3 << now << " Ban duoc nhan " << iTienChuyen << "VND tu tai khoan " << getID() << endl;
+    }
+    void xemNoiDungGiaoDich() {
+        ifstream iFile;
+        iFile.open(getID() + ".txt");
+        string strLay;
+        while (getline(iFile, strLay)) {
+            cout << strLay << endl;
+        }
+    }
+    void doiMaPin() {
+        string strPinCu, strPinMoi, strKiemTraPinMoi;
+        vector<string> ID;
+        vector<string> Pin;
+        ifstream iFile;
+        iFile.open("TheTu.txt");
+        string strLay;
+        while (getline(iFile, strLay)) {
+            stringstream ss(strLay);
+            string strID, strPin;
+            ss >> strID >> strPin;
+            ID.push_back(strID);
+            Pin.push_back(strPin);
+        }
+        string strKiemTraPinCu;
+        for (int i = 0; i < ID.size(); i++)
+            if (ID[i] == getID())
+                strKiemTraPinCu = Pin[i];
+    Again:
+        cout << "Nhap Pin cu: ";
+        getline(cin, strPinCu);
+        cout << "Nhap Pin Moi: ";
+        getline(cin, strPinMoi);
+        cout << "Nhap Pin Moi 1 lan nua: ";
+        getline(cin, strKiemTraPinMoi);
+        if (strPinCu != strKiemTraPinCu)
+        {
+            system("cls");
+            cout << "Ban da nhap sai Pin cu. Vui long nhap lai: " << endl;
+            goto Again;
+        }
+        else if (strPinMoi != strKiemTraPinMoi)
+        {
+            system("cls");
+            cout << "Ban da nhap sai Pin Moi. Vui long nhap lai: " << endl;
+            goto Again;
+        }
+        cout << "Ban da doi ma pin thanh cong" << endl;
+        for (int i = 0; i < Pin.size(); i++)
+            if (ID[i] == getID())
+                Pin[i] = strPinMoi;
+        ofstream oFile;
+        oFile.open("TheTu.txt");
+        for (int i = 0; i < ID.size(); i++)
+            oFile << ID[i] << " " << Pin[i] << endl;
+    }
 };
 
 class Admin : public Person
@@ -239,7 +438,7 @@ public:
                 if (strID == id)
                 {
                     return true;
-                }      
+                }
             }
             File.close();
         }
@@ -251,7 +450,7 @@ public:
         File.open("TheTu.txt", ios::app);
         User usr;
         if (File.is_open())
-        {    
+        {
             string strID;
             cout << "Input account to add: ";
             cin >> strID;
@@ -284,13 +483,13 @@ public:
         historyFile.open("LichSu" + usr.getID() + ".txt", ios::out);
         if (historyFile.is_open())
         {
-            
+
             historyFile << "init account " << getTime() << '\n';
             historyFile.close();
         }
     }
 
-    void danhSachTaiKhoan() 
+    void danhSachTaiKhoan()
     {
         ifstream File;
         File.open("TheTu.txt");
@@ -327,14 +526,14 @@ public:
                 ss >> tmp;
                 if (tmp == strID)
                 {
-                    continue;                 
+                    continue;
                 }
                 else
                 {
                     v.push_back(line);
                 }
-                
-            }    
+
+            }
         }
         ofstream writeAccountFile;
         writeAccountFile.open("TheTu.txt", ios::out);
@@ -354,7 +553,7 @@ public:
         writeAccountHistoryFile.open("LichSu" + strID + ".txt", ios::app);
         if (writeAccountHistoryFile.is_open())
         {
-            writeAccountHistoryFile << "Account removed successfully " << getTime() << '\n';    
+            writeAccountHistoryFile << "Account removed successfully " << getTime() << '\n';
         }
     }
     void unlockAccount()
@@ -374,7 +573,7 @@ public:
                 if (line == "false")
                 {
                     v.push_back("true");
-                }       
+                }
             }
             File.close();
         }
@@ -382,7 +581,7 @@ public:
         writeAccountFile.open(strID + ".txt", ios::out);
         for (auto it : v)
         {
-            writeAccountFile << it << '\n';       
+            writeAccountFile << it << '\n';
         }
     }
 };
@@ -396,6 +595,4 @@ int main()
     //ad.dangNhap();
     //ad.themTaiKhoan();
     //ad.xoaThe();
-    ad.unlockAccount();
-    system("pause");
 }
