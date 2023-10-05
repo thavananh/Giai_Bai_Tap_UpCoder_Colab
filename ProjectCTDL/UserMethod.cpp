@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <ctime>
 #include "User.h"
+#include "DateTime.h"
 using namespace std;
 
 User::User(string strID, string strPassword, string strFirstName, string strLastName, string strCurrencyName, string strAccountStatus, double dBalance) : Person(strID, strPassword)
@@ -164,6 +165,7 @@ loop:
     else
     {
         cout << "Error while openning file";
+        return false;
     }
     if (dWithdrawAmount > dBalance) // 
     {
@@ -172,18 +174,113 @@ loop:
         // có lỗi khi balance nhỏ hơn 50000, và số tiền nhập lại ko đủ 50000 =))))) và kết quả là vòng lặp vĩnh cửu
         goto loop;
     }
-    cout << "Ban co chac muon rut khong (co/khong): ";
+    cout << "Do you want to withdraw ? (yes/no): ";
     string strSelection;
     cin >> strSelection;
-    if (strSelection == "co")
+    if (strSelection == "yes")
     {
         dBalance -= dWithdrawAmount;
+        cout << "Transaction successful !!!" << endl;
+        ofstream ofAccountRecordFile, ofTransactionRecordFile;
+        ofAccountRecordFile.open("LichSu" + User::getID() + ".txt", ios::app);
+        if (ofAccountRecordFile.is_open())
+        {
+            ofAccountRecordFile << "You withdraw " << dWithdrawAmount << getTime(); 
+            ofAccountRecordFile.close();
+        }
+        else
+        {
+            cout << "Error while openning file";
+        }
+
+        if (ofTransactionRecordFile.is_open())
+        {
+            ofTransactionRecordFile << "You withdraw " << dWithdrawAmount << getTime() << endl;;
+        }
+        else
+        {
+            cout << "Error while openning file" << endl;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool User::transferMoney()
+{
+    string strDestinationAccount;
+    double dTransferAmount;
+loop:
+    cout << "Enter destination account: ";
+    cin >> strDestinationAccount;
+    cout << "Enter transfer amount: ";
+    cin >> dTransferAmount;
+    cin.ignore();
+    if (dTransferAmount < 50000)
+    {
+        system("cls");
+        cout << "You need to transfer more than 50000. Please enter your transfer amount" << endl;
+        goto loop;
+    }
+    double dBalance;
+    double dBalance;
+    ifstream ifAccountFile;
+    vector<string>vFileLine(5, ""); // use to update file
+    ifAccountFile.open(User::getID() + ".txt", ios::in);
+    if (ifAccountFile.is_open())
+    {
+        for (size_t i = 0; i < 4; i++)
+        {
+            if (i == 2)
+            {
+                ifAccountFile >> dBalance;
+            }
+            else
+            {
+                getline(ifAccountFile, vFileLine[i]);
+            }
+        }
+        ifAccountFile.close();
     }
     else
     {
-        return false;
+        cout << "Error while openning file";
     }
-    cout << "Transaction successful !!!" << endl;
-    ofstream ofAccountRecordFile;
-    ofAccountRecordFile.open("LichSu" + User::getID() + ".txt", ios::app);
+    if (dTransferAmount > dBalance) // 
+    {
+        system("cls");
+        cout << "Your balance amount not enough. Please enter your transfer amount again !!!" << endl; 
+        // có lỗi khi balance nhỏ hơn 50000, và số tiền nhập lại ko đủ 50000 =))))) và kết quả là vòng lặp vĩnh cửu
+        goto loop;
+    }
+    cout << "Do you want to transfer ? (yes/no): ";
+    string strSelection;
+    cin >> strSelection;
+    if (strSelection == "yes")
+    {
+        dBalance -= dTransferAmount;
+        cout << "Transaction successful !!!" << endl;
+        ofstream ofAccountRecordFile, ofTransactionRecordFile;
+        ofAccountRecordFile.open("LichSu" + User::getID() + ".txt", ios::app);
+        ofTransactionRecordFile.open("Transaction" + User::getID() + ".txt", ios::app);
+        if (ofAccountRecordFile.is_open())
+        {
+            ofAccountRecordFile << "You transfer " << dTransferAmount << getTime() << endl;; 
+            ofAccountRecordFile.close();
+        }
+        else
+        {
+            cout << "Error while openning file" << endl;
+        }
+        if (ofTransactionRecordFile.is_open())
+        {
+            ofTransactionRecordFile << "You transfer " << dTransferAmount << getTime() << endl;;
+        }
+        else
+        {
+            cout << "Error while openning file" << endl; // nen luu may cai cout nay` vo file =))
+        }
+        return true;
+    }
+    return false;
 }
