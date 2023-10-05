@@ -23,6 +23,11 @@ public:
     string getLastName();
     string getMoneyType();
     string getAccountStatus();
+    void setFirstName(string strFirstName);
+    void setLastName(string strLastName);
+    void setMoneyType(string strMoneyType);
+    void setAccountStatus(string strAccountStatus);
+    void setBalance(double dBalance);
     double getBalance();
     int checkNumbersOfUsers();
     void login() override;
