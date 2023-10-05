@@ -13,27 +13,27 @@ using namespace std;
 class User : public Person
 {
 private:
-    string _strFirstName, _strLastName, _strMoneyType, _strAccountStatus;
+    string _strFirstName, _strLastName, _strCurrencyName, _strAccountStatus;
     double _dBalance;
 public:
-    User(string strID = "", string strPassword = "", string strFirstName = "", string strLastName = "", string strMoneyType = "", string strAccountStatus = "", double dBalance = 0.0);
+    User(string strID = "", string strPassword = "", string strFirstName = "", string strLastName = "", string strCurrencyName = "", string strAccountStatus = "", double dBalance = 0.0);
     User(const User& user);
     ~User();
     string getFirstName();
     string getLastName();
-    string getMoneyType();
+    string getCurrencyName();
     string getAccountStatus();
     void setFirstName(string strFirstName);
     void setLastName(string strLastName);
-    void setMoneyType(string strMoneyType);
+    void setCurrencyName(string strCurrencyName);
     void setAccountStatus(string strAccountStatus);
     void setBalance(double dBalance);
     double getBalance();
     int checkNumbersOfUsers();
     void login() override;
     void viewAccountInfo();
-    void withdrawMoney();
-    void transferMoney();
+    bool withdrawMoney();
+    bool transferMoney();
     void viewTransactionDetails();
     void changePassword();
 };
