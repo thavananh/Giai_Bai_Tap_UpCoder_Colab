@@ -11,13 +11,13 @@
 #include "DateTime.h"
 using namespace std;
 
-Admin::Admin(string strID = "", string strPassword = "") : Person(strID, strPassword)
+Admin::Admin(string strID, string strPassword) : Person(strID, strPassword)
 {}
 
 Admin::Admin(const Admin& admin) : Person(admin)
 {}
 
-Admin::~Admin(){}
+Admin::~Admin() {}
 
 int Admin::checkNumbersOfAdmins()
 {
@@ -47,7 +47,7 @@ void Admin::login()
 {
     if (Admin::checkNumbersOfAdmins() < 3)
     {
-        cout << "Cannot login, not enough admins" << endl;    
+        cout << "Cannot login, not enough admins" << endl;
         return;
     }
     Admin::inputLogin();
@@ -111,7 +111,7 @@ void Admin::addUserAccount()
     User usr;
     if (ofAccountListFile.is_open())
     {
-loop:
+    loop:
         string strID;
         cout << "Input account to add: ";
         cin >> strID;

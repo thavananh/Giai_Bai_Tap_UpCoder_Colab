@@ -21,7 +21,7 @@ Person::Person(const Person& person)
     this->_strPassword = person._strPassword;
 }
 
-Person::~Person(){}
+Person::~Person() {}
 
 string Person::getID()
 {
@@ -31,4 +31,14 @@ string Person::getID()
 string Person::getPassword()
 {
     return this->_strPassword;
+}
+
+void Person::setStrID(string strID)
+{
+    this->_strID = strID;
+}
+
+void Person::setStrPassword(string strPassword)
+{
+    this->_strPassword = strPassword;
 }

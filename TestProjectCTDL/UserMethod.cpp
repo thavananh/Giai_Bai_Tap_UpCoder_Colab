@@ -26,7 +26,7 @@ User::User(const User& user) : Person(user)
     this->_dBalance = user._dBalance;
 }
 
-User::~User(){}
+User::~User() {}
 
 string User::getFirstName()
 {
@@ -51,6 +51,31 @@ string User::getAccountStatus()
 double User::getBalance()
 {
     return this->_dBalance;
+}
+
+void User::setFirstName(string strFirstName)
+{
+    this->_strFirstName = strFirstName;
+}
+
+void User::setLastName(string strLastName)
+{
+    this->_strLastName = strLastName;
+}
+
+void User::setCurrencyName(string strCurrencyName)
+{
+    this->_strCurrencyName = strCurrencyName;
+}
+
+void User::setAccountStatus(string strAccountStatus)
+{
+    this->_strAccountStatus = strAccountStatus;
+}
+
+void User::setBalance(double dBalance)
+{
+    this->_dBalance = dBalance;
 }
 
 int User::checkNumbersOfUsers()
@@ -120,13 +145,13 @@ void User::login()
             {
                 cout << "Login successfully";
             }
-            
+
         }
         else
         {
             cout << "Error while opening file";
         }
-    }   
+    }
 }
 
 void User::viewAccountInfo()
@@ -188,7 +213,7 @@ loop:
     if (dWithdrawAmount > dBalance) // 
     {
         system("cls");
-        cout << "Your balance amount not enough. Please enter your withdraw amount again !!!" << endl; 
+        cout << "Your balance amount not enough. Please enter your withdraw amount again !!!" << endl;
         // có lỗi khi balance nhỏ hơn 50000, và số tiền nhập lại ko đủ 50000 =))))) và kết quả là vòng lặp vĩnh cửu
         goto loop;
     }
@@ -203,7 +228,7 @@ loop:
         ofAccountRecordFile.open("LichSu" + User::getID() + ".txt", ios::app);
         if (ofAccountRecordFile.is_open())
         {
-            ofAccountRecordFile << "You withdraw " << dWithdrawAmount << getTime(); 
+            ofAccountRecordFile << "You withdraw " << dWithdrawAmount << getTime();
             ofAccountRecordFile.close();
         }
         else
@@ -240,8 +265,7 @@ loop:
         cout << "You need to transfer more than 50000. Please enter your transfer amount" << endl;
         goto loop;
     }
-    double dBalance;
-    double dBalance;
+    double dBalance = 0.0;
     ifstream ifAccountFile;
     vector<string>vFileLine(5, ""); // use to update file
     ifAccountFile.open(User::getID() + ".txt", ios::in);
@@ -267,7 +291,7 @@ loop:
     if (dTransferAmount > dBalance) // 
     {
         system("cls");
-        cout << "Your balance amount not enough. Please enter your transfer amount again !!!" << endl; 
+        cout << "Your balance amount not enough. Please enter your transfer amount again !!!" << endl;
         // có lỗi khi balance nhỏ hơn 50000, và số tiền nhập lại ko đủ 50000 =))))) và kết quả là vòng lặp vĩnh cửu
         goto loop;
     }
@@ -283,7 +307,7 @@ loop:
         ofTransactionRecordFile.open("Transaction" + User::getID() + ".txt", ios::app);
         if (ofAccountRecordFile.is_open())
         {
-            ofAccountRecordFile << "You transfer " << dTransferAmount << getTime() << endl;; 
+            ofAccountRecordFile << "You transfer " << dTransferAmount << getTime() << endl;;
             ofAccountRecordFile.close();
         }
         else
@@ -339,11 +363,11 @@ void User::changePassword()
             ss >> strID;
             if (strID != User::getID())
             {
-                continue;     
+                continue;
             }
             string strVerifyNewPassword, strVerifyOldPassword;
             ss >> strOldPassword;
-loop:
+        loop:
             cout << "Please enter your old pin: ";
             cin >> strVerifyOldPassword;
             if (strOldPassword != strVerifyNewPassword)
@@ -354,7 +378,7 @@ loop:
             }
             cout << "Please enter your new pin: ";
             cin >> strNewPassword;
-loop1:
+        loop1:
             cout << "Please re-enter your pin again: ";
             cin >> strVerifyNewPassword;
             if (strVerifyNewPassword != strNewPassword)
