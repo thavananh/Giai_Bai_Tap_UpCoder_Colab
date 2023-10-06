@@ -102,13 +102,14 @@ void Admin::addUserAccount()
     User usr;
     if (ofAccountListFile.is_open())
     {
+loop:
         string strID;
         cout << "Input account to add: ";
         cin >> strID;
         if (Admin::checkAccountDuplicate(strID))
         {
-            cout << "Error, found duplicate";
-            return;
+            cout << "Error, found duplicate !!!";
+            goto loop;
         }
         usr.setStrID(strID);
         usr.setStrPassword("123456");
@@ -135,11 +136,117 @@ void Admin::addUserAccount()
     historyFile.open("LichSu" + usr.getID() + ".txt", ios::out);
     if (historyFile.is_open())
     {
-        historyFile << "init account " << getTime() << '\n';
+        historyFile << "init account successfully" << getTime() << '\n';
         historyFile.close();
     }
-    void Admin::viewAccountList()
+}
+
+void Admin::viewAccountList()
+{
+    ifstream ifAccountListFile;
+    ifAccountListFile.open("TheTu.txt", ios::in);
+    if (ifAccountListFile.is_open())
     {
-        
+        string strFileLine;
+        while (getline(ifAccountListFile, strFileLine))
+        {
+            cout << strFileLine << endl;
+        }
+    }
+}
+
+void Admin::removeAccount()
+{
+    string strID;
+    cout << "Input an account to remove: ";
+    cin >> strID;
+    if (remove((strID + ".txt").c_str()) == 0)
+    {
+        cout << "remove successfully" << endl;
+    }
+    else
+    {
+        cout << "Error while removing account" << endl;
+        return;
+    }
+    ifstream ifAccountListFile;
+    ifAccountListFile.open("TheTu.txt", ios::in);
+    vector<string>vFileLine;
+    if (ifAccountListFile.is_open())
+    {
+        string strFileLine;
+        while (getline(ifAccountListFile, strFileLine))
+        {
+            stringstream ss(strFileLine);
+            string strTmp;
+            ss >> strTmp;
+            if (strTmp == strID)
+            {
+                continue;
+            }
+            else
+            {
+                vFileLine.push_back(strFileLine);
+            }
+        }
+        ifAccountListFile.close();
+    }
+    else
+    {
+        cout << "Error while opening file" << endl;
+    }
+    ofstream ofAccountListFile;
+    ofAccountListFile.open("TheTu.txt", ios::out);
+    if (ofAccountListFile.is_open())
+    {
+        for (auto it : vFileLine)
+        {
+            ofAccountListFile << it << '\n';
+        }
+        ofAccountListFile.close();
+    }
+    else
+    {
+        cout << "Error while opening file";
+    }
+    ofstream ofAccountHistoryFile;
+    ofAccountHistoryFile.open("LichSu" + strID + ".txt", ios::app);
+    if (ofAccountHistoryFile.is_open())
+    {
+        ofAccountHistoryFile << "Account removed successfully " << getTime() << '\n';
+        ofAccountHistoryFile.close();
+    }
+    else
+    {
+        cout << "Error while opening file" << endl;
+    }
+}
+
+void Admin::unlockAccount()
+{
+    ifstream ifAccountListFile;
+    string strID;
+    cout << "Please input account to unlock: ";
+    cin >> strID;
+    vector<string>vFileLine;
+    ifAccountListFile.open(strID + ".txt", ios::in);
+    if (ifAccountListFile.is_open())
+    {
+        string strFileLine;
+        while (getline(ifAccountListFile, strFileLine))
+        {
+            vFileLine.push_back(strFileLine);
+            if (strFileLine == "false")
+            {
+                vFileLine.push_back("true");
+            }
+        }
+        ifAccountListFile.close();
+    }
+    ofstream writeAccountFile;
+    writeAccountFile.open(strID + ".txt", ios::out);
+    for (auto it : vFileLine)
+    {
+        writeAccountFile << it << '\n';
     }
 }
