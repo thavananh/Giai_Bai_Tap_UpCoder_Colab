@@ -164,7 +164,7 @@ loop:
     }
     else
     {
-        cout << "Error while openning file";
+        cout << "Error while opening file";
         return false;
     }
     if (dWithdrawAmount > dBalance) // 
@@ -190,7 +190,7 @@ loop:
         }
         else
         {
-            cout << "Error while openning file";
+            cout << "Error while opening file";
         }
 
         if (ofTransactionRecordFile.is_open())
@@ -199,7 +199,7 @@ loop:
         }
         else
         {
-            cout << "Error while openning file" << endl;
+            cout << "Error while opening file" << endl;
         }
         return true;
     }
@@ -244,7 +244,7 @@ loop:
     }
     else
     {
-        cout << "Error while openning file";
+        cout << "Error while opening file";
     }
     if (dTransferAmount > dBalance) // 
     {
@@ -270,7 +270,7 @@ loop:
         }
         else
         {
-            cout << "Error while openning file" << endl;
+            cout << "Error while opening file" << endl;
         }
         if (ofTransactionRecordFile.is_open())
         {
@@ -278,9 +278,96 @@ loop:
         }
         else
         {
-            cout << "Error while openning file" << endl; // nen luu may cai cout nay` vo file =))
+            cout << "Error while opening file" << endl; // nen luu may cai cout nay` vo file =))
         }
         return true;
     }
     return false;
+}
+
+void User::viewTransactionDetails()
+{
+    ifstream ifAccountTrasactionFile;
+    ifAccountTrasactionFile.open("Transaction" + User::getID() + ".txt", ios::in);
+    if (ifAccountTrasactionFile.is_open())
+    {
+        string strFileLine;
+        while (getline(ifAccountTrasactionFile, strFileLine))
+        {
+            cout << strFileLine << endl;
+        }
+        ifAccountTrasactionFile.close();
+    }
+    else
+    {
+        cout << "Error while opening file";
+    }
+}
+
+void User::changePassword()
+{
+    ifstream ifAccountListFile;
+    vector<string>vFileLine;
+    string strNewPassword, strOldPassword;
+    ifAccountListFile.open("TheTu.txt", ios::in);
+    if (ifAccountListFile.is_open())
+    {
+        string strFileLine;
+        while (getline(ifAccountListFile, strFileLine))
+        {
+            vFileLine.push_back(strFileLine);
+            stringstream ss(strFileLine);
+            string strID;
+            ss >> strID;
+            if (strID != User::getID())
+            {
+                continue;     
+            }
+            string strVerifyNewPassword, strVerifyOldPassword;
+            ss >> strOldPassword;
+loop:
+            cout << "Please enter your old pin: ";
+            cin >> strVerifyOldPassword;
+            if (strOldPassword != strVerifyNewPassword)
+            {
+                system("cls");
+                cout << "You enter wrong pin. Please enter your pin again !!! " << endl;
+                goto loop;
+            }
+            cout << "Please enter your new pin: ";
+            cin >> strNewPassword;
+loop1:
+            cout << "Please re-enter your pin again: ";
+            cin >> strVerifyNewPassword;
+            if (strVerifyNewPassword != strNewPassword)
+            {
+                cout << "You enter wrong new pin. Please enter your new pin again !!! " << endl;
+                goto loop1;
+            }
+            cout << "Changed password successfully" << endl;
+        }
+        ifAccountListFile.close();
+    }
+    ofstream ofAccountList;
+    ofAccountList.open("TheTu.txt", ios::out);
+    if (ofAccountList.is_open())
+    {
+        for (auto it : vFileLine)
+        {
+            stringstream ss(it);
+            string strID;
+            ss >> strID;
+            if (strID == User::getID())
+            {
+                ofAccountList << strID << " " << strNewPassword << endl;
+                continue;
+            }
+            ofAccountList << it << endl;
+        }
+        ofAccountList.close();
+    }
+    else
+    {
+        cout << "Error while opening file" << endl;
+    }
 }
