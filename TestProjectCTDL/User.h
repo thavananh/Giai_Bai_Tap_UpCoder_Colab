@@ -23,6 +23,7 @@ public:
     string getLastName();
     string getCurrencyName();
     string getAccountStatus();
+    void inputLogin();
     void setFirstName(string strFirstName);
     void setLastName(string strLastName);
     void setCurrencyName(string strCurrencyName);

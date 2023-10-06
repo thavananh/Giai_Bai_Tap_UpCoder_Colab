@@ -35,6 +35,14 @@ int Admin::checkNumbersOfAdmins()
     return iNumbersOfAdmins;
 }
 
+void Admin::inputLogin()
+{
+    string strID, strPassword;
+    cin >> strID >> strPassword;
+    Admin::setStrID(strID);
+    Admin::setStrPassword(strPassword);
+}
+
 void Admin::login()
 {
     if (Admin::checkNumbersOfAdmins() < 3)
@@ -42,9 +50,10 @@ void Admin::login()
         cout << "Cannot login, not enough admins" << endl;    
         return;
     }
+    Admin::inputLogin();
     ifstream ifAdminFile;
     ifAdminFile.open("Admin.txt", ios::in);
-    bool isAuth = false;
+    bool bIsAuth = false;
     if (ifAdminFile.is_open())
     {
         string strFileLine;
@@ -57,7 +66,7 @@ void Admin::login()
             ss >> Pin;
             if (ID == Admin::getID() && Pin == Admin::getID())
             {
-                isAuth = true;
+                bIsAuth = true;
             }
         }
     }
@@ -65,7 +74,7 @@ void Admin::login()
     {
         cout << "error while opening file" << endl;
     }
-    if (isAuth)
+    if (bIsAuth)
     {
         cout << "login successfully" << endl;
         return;

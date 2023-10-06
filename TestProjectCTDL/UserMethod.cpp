@@ -69,6 +69,23 @@ int User::checkNumbersOfUsers()
     return iNumbersOfUsers;
 }
 
+void User::inputLogin()
+{
+loop:
+    string strID, strPassword;
+    cin >> strID >> strPassword;
+    for (size_t i = 0; i < strPassword.size(); i++)
+    {
+        if (isdigit(strPassword[i]))
+        {
+            cout << "do not input password have character" << endl;
+            goto loop;
+        }
+    }
+    User::setStrID(strID);
+    User::setStrPassword(strPassword);
+}
+
 void User::login()
 {
     if (checkNumbersOfUsers() < 10)
@@ -77,6 +94,7 @@ void User::login()
     }
     else
     {
+        User::inputLogin();
         ifstream ifUserListFile;
         ifUserListFile.open("TheTu.txt", ios::in);
         bool bIsAuth = false;

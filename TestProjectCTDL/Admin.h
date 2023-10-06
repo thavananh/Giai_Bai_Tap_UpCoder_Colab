@@ -12,9 +12,11 @@ using namespace std;
 
 class Admin : public Person
 {
+public:
     Admin(string strID = "", string strMaPin = "");
     Admin(const Admin& admin);
     ~Admin();
+    void inputLogin();
     int checkNumbersOfAdmins();
     void login() override;
     bool checkAccountDuplicate(string strID);
