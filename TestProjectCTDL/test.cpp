@@ -14,6 +14,6 @@ using namespace std;
 int main()
 {
     Admin ad;
-    // ad.login();
+    ad.login();
     system("pause");
 }
