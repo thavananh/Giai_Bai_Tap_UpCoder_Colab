@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <cstring>
 #include <string>
 #include <fstream>
@@ -8,6 +8,7 @@
 #include <ctime>
 #include "User.h"
 #include "DateTime.h"
+
 using namespace std;
 
 User::User(string strID, string strPassword, string strFirstName, string strLastName, string strCurrencyName, string strAccountStatus, double dBalance) : Person(strID, strPassword)

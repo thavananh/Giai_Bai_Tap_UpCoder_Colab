@@ -25,4 +25,3 @@ public:
     void removeAccount();
     void unlockAccount();
 };
-

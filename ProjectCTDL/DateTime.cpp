@@ -1,4 +1,3 @@
-#pragma once
 #include <iostream>
 #include <cstring>
 #include <string>
@@ -8,14 +7,16 @@
 #include <iomanip>
 #include <ctime>
 #include "DateTime.h"
+
 using namespace std;
 
 string getTime()
 {
     time_t currentTime = time(nullptr);
-    tm* localTime = localtime(&currentTime);
+    tm localTime;
+    localtime_s(&localTime, &currentTime);
     stringstream ss;
-    ss << put_time(localTime, "%Y-%m-%d %H:%M:%S");
+    ss << put_time(&localTime, "%Y-%m-%d %H:%M:%S");
     string timeString = ss.str();
     return timeString;
 }
