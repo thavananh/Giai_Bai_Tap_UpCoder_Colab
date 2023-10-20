@@ -99,6 +99,6 @@ int main()
 		FILE_OUTPUT<<endl;
 		FILE_OUTPUT<<"Tong gia tri cua cay la: "<<sum<<endl;
 	}
-	
+	system("pause");
 	
 }
