@@ -1,3 +1,0 @@
-admin 123long
-admin1 123duy
-admin2 123tam
